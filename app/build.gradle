@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
@@ -30,18 +31,18 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //apk命名
-           /* android.applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        //这里修改apk文件名
-                        def fileName = "AndroidFire-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-                }
-            }*/
+            /* android.applicationVariants.all { variant ->
+                 variant.outputs.each { output ->
+                     def outputFile = output.outputFile
+                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                         //这里修改apk文件名
+                         def fileName = "AndroidFire-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
+                         output.outputFile = new File(outputFile.parent, fileName)
+                     }
+                 }
+             }*/
         }
-        debug{
+        debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             minifyEnabled false
             zipAlignEnabled false
@@ -67,10 +68,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-   /* configurations.all {
-        resolutionStrategy.force 'com.android.support:support-v4:28.0.0'
-        // the above lib may be old dependencies version
-    }*/
+    /* configurations.all {
+         resolutionStrategy.force 'com.android.support:support-v4:28.0.0'
+         // the above lib may be old dependencies version
+     }*/
 }
 
 dependencies {
@@ -85,4 +86,20 @@ dependencies {
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     api 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+}
+
+// 添加插件
+apply plugin: 'com.mob.sdk'
+
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "2c0d8cde8e810"
+    appSecret "a7ebe80979c62c157d88d555466154fe"
+
+    SMSSDK {
+        //默认使用GUI，若不使用GUI，通过以下开关关闭
+        //gui false
+        //若使用GUI的自动填充验证码功能，需打开此设置
+        //autoSMS true
+    }
 }

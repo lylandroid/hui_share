@@ -2,6 +2,8 @@ package com.jaydenxiao.androidfire.ui.news.fragment;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import com.aspsine.irecyclerview.IRecyclerView;
@@ -17,12 +19,17 @@ import com.jaydenxiao.androidfire.ui.news.contract.NewsListContract;
 import com.jaydenxiao.androidfire.ui.news.model.NewsListModel;
 import com.jaydenxiao.androidfire.ui.news.presenter.NewsListPresenter;
 import com.jaydenxiao.common.base.BaseFragment;
+import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonwidget.LoadingTip;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 
 /**
  * des:新闻fragment
@@ -102,6 +109,29 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
             case R.id.tv_tab_money:
                 break;
         }
+        sendCode(getContext());
+    }
+
+    public void sendCode(Context context) {
+        RegisterPage page = new RegisterPage();
+        //如果使用我们的ui，没有申请模板编号的情况下需传null
+        page.setTempCode(null);
+        page.setRegisterCallback(new EventHandler() {
+            public void afterEvent(int event, int result, Object data) {
+                Log.i("MY_TAG", event + "    " + result + "  " + data);
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    // 处理成功的结果
+                    HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+                    String country = (String) phoneMap.get("country"); // 国家代码，如“86”
+                    String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
+                    // TODO 利用国家代码和手机号码进行后续的操作
+                } else {
+                    // TODO 处理错误的结果
+                    ToastUitl.showShort("短信验证码发送失败，请稍候重试");
+                }
+            }
+        });
+        page.show(context);
     }
 
     @Override

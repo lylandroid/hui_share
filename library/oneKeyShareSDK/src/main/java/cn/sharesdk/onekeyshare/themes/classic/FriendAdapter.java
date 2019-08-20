@@ -20,12 +20,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 
-import com.mob.tools.gui.PullToRefreshListAdapter;
-import com.mob.tools.gui.PullToRefreshView;
+import com.mob.tools.gui.PullToRequestListAdapter;
+import com.mob.tools.gui.PullToRequestView;
 import com.mob.tools.utils.UIHandler;
-
 /** 好友列表的适配器 */
-public class FriendAdapter extends PullToRefreshListAdapter implements PlatformActionListener {
+public class FriendAdapter extends PullToRequestListAdapter implements PlatformActionListener {
 	private FriendListPage activity;
 	private boolean hasNext;
 	private Platform platform;
@@ -42,7 +41,8 @@ public class FriendAdapter extends PullToRefreshListAdapter implements PlatformA
 	/** 根据设计，按照比例来布局，以此来适配所有手机 */
 	private float ratio;
 
-	public FriendAdapter(FriendListPage activity, PullToRefreshView view) {
+
+	public FriendAdapter(FriendListPage activity, PullToRequestView view) {
 		super(view);
 		this.activity = activity;
 
@@ -233,6 +233,11 @@ public class FriendAdapter extends PullToRefreshListAdapter implements PlatformA
 			llHeader = new PRTHeader(getContext());
 		}
 		return llHeader;
+	}
+
+	@Override
+	public View getFooterView() {
+		return null;
 	}
 
 	public void onPullDown(int percent) {

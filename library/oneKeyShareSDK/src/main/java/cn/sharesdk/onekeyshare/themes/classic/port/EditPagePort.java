@@ -8,8 +8,6 @@
 
 package cn.sharesdk.onekeyshare.themes.classic.port;
 
-import java.io.File;
-
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -21,13 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
-import cn.sharesdk.onekeyshare.themes.classic.EditPage;
-import cn.sharesdk.onekeyshare.themes.classic.XView;
 
 import com.mob.tools.gui.AsyncImageView;
 import com.mob.tools.utils.BitmapHelper;
-import com.mob.tools.utils.R;
+import com.mob.tools.utils.ResHelper;
+
+import java.io.File;
+
+import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
+import cn.sharesdk.onekeyshare.themes.classic.EditPage;
+import cn.sharesdk.onekeyshare.themes.classic.XView;
 
 /** 竖屏的编辑页 */
 public class EditPagePort extends EditPage  {
@@ -45,7 +46,7 @@ public class EditPagePort extends EditPage  {
 	public void onCreate() {
 		super.onCreate();
 
-		int screenHeight = R.getScreenHeight(activity);
+		int screenHeight = ResHelper.getScreenHeight(activity);
 		float ratio = ((float) screenHeight) / DESIGN_SCREEN_HEIGHT;
 
 		maxBodyHeight = 0;
@@ -85,7 +86,7 @@ public class EditPagePort extends EditPage  {
 		tvCancel.setTextColor(0xff3b3b3b);
 		tvCancel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		tvCancel.setGravity(Gravity.CENTER);
-		int resId = R.getStringRes(activity, "ssdk_oks_cancel");
+		int resId = ResHelper.getStringRes(activity, "ssdk_oks_cancel");
 		if (resId > 0) {
 			tvCancel.setText(resId);
 		}
@@ -99,7 +100,7 @@ public class EditPagePort extends EditPage  {
 		tvTitle.setTextColor(0xff3b3b3b);
 		tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
 		tvTitle.setGravity(Gravity.CENTER);
-		resId = R.getStringRes(activity, "ssdk_oks_multi_share");
+		resId = ResHelper.getStringRes(activity, "ssdk_oks_multi_share");
 		if (resId > 0) {
 			tvTitle.setText(resId);
 		}
@@ -111,7 +112,7 @@ public class EditPagePort extends EditPage  {
 		tvShare.setTextColor(0xffff6d11);
 		tvShare.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		tvShare.setGravity(Gravity.CENTER);
-		resId = R.getStringRes(activity, "ssdk_oks_share");
+		resId = ResHelper.getStringRes(activity, "ssdk_oks_share");
 		if (resId > 0) {
 			tvShare.setText(resId);
 		}
