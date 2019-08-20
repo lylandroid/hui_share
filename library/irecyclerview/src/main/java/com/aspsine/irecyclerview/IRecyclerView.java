@@ -4,9 +4,6 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +14,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.core.view.MotionEventCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.aspsine.irecyclerview.widget.LoadMoreFooterView;
 import com.jaydenxiao.common.commonutils.LogUtils;
@@ -408,24 +410,24 @@ public class IRecyclerView extends RecyclerView {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent e) {
-        final int action = android.support.v4.view.MotionEventCompat.getActionMasked(e);
-        final int actionIndex = android.support.v4.view.MotionEventCompat.getActionIndex(e);
+        final int action = MotionEventCompat.getActionMasked(e);
+        final int actionIndex = MotionEventCompat.getActionIndex(e);
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
-                mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(e, 0);
-                mLastTouchX = (int) (android.support.v4.view.MotionEventCompat.getX(e, actionIndex) + 0.5f);
-                mLastTouchY = (int) (android.support.v4.view.MotionEventCompat.getY(e, actionIndex) + 0.5f);
+                mActivePointerId = MotionEventCompat.getPointerId(e, 0);
+                mLastTouchX = (int) (MotionEventCompat.getX(e, actionIndex) + 0.5f);
+                mLastTouchY = (int) (MotionEventCompat.getY(e, actionIndex) + 0.5f);
             }
             break;
 
             case MotionEvent.ACTION_POINTER_DOWN: {
-                mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(e, actionIndex);
-                mLastTouchX = (int) (android.support.v4.view.MotionEventCompat.getX(e, actionIndex) + 0.5f);
-                mLastTouchY = (int) (android.support.v4.view.MotionEventCompat.getY(e, actionIndex) + 0.5f);
+                mActivePointerId = MotionEventCompat.getPointerId(e, actionIndex);
+                mLastTouchX = (int) (MotionEventCompat.getX(e, actionIndex) + 0.5f);
+                mLastTouchY = (int) (MotionEventCompat.getY(e, actionIndex) + 0.5f);
             }
             break;
 
-            case android.support.v4.view.MotionEventCompat.ACTION_POINTER_UP: {
+            case MotionEventCompat.ACTION_POINTER_UP: {
                 onPointerUp(e);
             }
             break;
@@ -436,18 +438,18 @@ public class IRecyclerView extends RecyclerView {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        final int action = android.support.v4.view.MotionEventCompat.getActionMasked(e);
+        final int action = MotionEventCompat.getActionMasked(e);
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
-                final int index = android.support.v4.view.MotionEventCompat.getActionIndex(e);
-                mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(e, 0);
+                final int index = MotionEventCompat.getActionIndex(e);
+                mActivePointerId = MotionEventCompat.getPointerId(e, 0);
                 mLastTouchX = getMotionEventX(e, index);
                 mLastTouchY = getMotionEventY(e, index);
             }
             break;
 
             case MotionEvent.ACTION_MOVE: {
-                final int index = android.support.v4.view.MotionEventCompat.findPointerIndex(e, mActivePointerId);
+                final int index = MotionEventCompat.findPointerIndex(e, mActivePointerId);
                 if (index < 0) {
                     LogUtils.loge(TAG, "Error processing scroll; pointer index for id " + index + " not found. Did any MotionEvents get skipped?");
                     return false;
@@ -496,15 +498,15 @@ public class IRecyclerView extends RecyclerView {
             }
             break;
 
-            case android.support.v4.view.MotionEventCompat.ACTION_POINTER_DOWN: {
-                final int index = android.support.v4.view.MotionEventCompat.getActionIndex(e);
-                mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(e, index);
+            case MotionEventCompat.ACTION_POINTER_DOWN: {
+                final int index = MotionEventCompat.getActionIndex(e);
+                mActivePointerId = MotionEventCompat.getPointerId(e, index);
                 mLastTouchX = getMotionEventX(e, index);
                 mLastTouchY = getMotionEventY(e, index);
             }
             break;
 
-            case android.support.v4.view.MotionEventCompat.ACTION_POINTER_UP: {
+            case MotionEventCompat.ACTION_POINTER_UP: {
                 onPointerUp(e);
             }
             break;
@@ -542,11 +544,11 @@ public class IRecyclerView extends RecyclerView {
     }
 
     private int getMotionEventX(MotionEvent e, int pointerIndex) {
-        return (int) (android.support.v4.view.MotionEventCompat.getX(e, pointerIndex) + 0.5f);
+        return (int) (MotionEventCompat.getX(e, pointerIndex) + 0.5f);
     }
 
     private int getMotionEventY(MotionEvent e, int pointerIndex) {
-        return (int) (android.support.v4.view.MotionEventCompat.getY(e, pointerIndex) + 0.5f);
+        return (int) (MotionEventCompat.getY(e, pointerIndex) + 0.5f);
     }
 
     private void fingerMove(int dy) {
@@ -713,11 +715,11 @@ public class IRecyclerView extends RecyclerView {
     }
 
     private void onPointerUp(MotionEvent e) {
-        final int actionIndex = android.support.v4.view.MotionEventCompat.getActionIndex(e);
-        if (android.support.v4.view.MotionEventCompat.getPointerId(e, actionIndex) == mActivePointerId) {
+        final int actionIndex = MotionEventCompat.getActionIndex(e);
+        if (MotionEventCompat.getPointerId(e, actionIndex) == mActivePointerId) {
             // Pick a new pointer to pick up the slack.
             final int newIndex = actionIndex == 0 ? 1 : 0;
-            mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(e, newIndex);
+            mActivePointerId = MotionEventCompat.getPointerId(e, newIndex);
             mLastTouchX = getMotionEventX(e, newIndex);
             mLastTouchY = getMotionEventY(e, newIndex);
         }

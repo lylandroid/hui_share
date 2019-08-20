@@ -1,11 +1,13 @@
 package com.jaydenxiao.common.commonutils;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.jaydenxiao.common.R;
 
 import java.io.File;
@@ -27,6 +29,7 @@ public class ImageLoaderUtils {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
+        Log.e("MY_TAG",url);
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
@@ -46,6 +49,7 @@ public class ImageLoaderUtils {
                 .error(R.drawable.ic_empty_picture)
                 .crossFade().into(imageView);
     }
+
     public static void displaySmallPhoto(Context context, ImageView imageView, String url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
@@ -57,6 +61,7 @@ public class ImageLoaderUtils {
                 .thumbnail(0.5f)
                 .into(imageView);
     }
+
     public static void displayBigPhoto(Context context, ImageView imageView, String url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
@@ -68,6 +73,7 @@ public class ImageLoaderUtils {
                 .error(R.drawable.ic_empty_picture)
                 .into(imageView);
     }
+
     public static void display(Context context, ImageView imageView, int url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
@@ -79,7 +85,8 @@ public class ImageLoaderUtils {
                 .error(R.drawable.ic_empty_picture)
                 .crossFade().into(imageView);
     }
-    public static void displayRound(Context context,ImageView imageView, String url) {
+
+    public static void displayRound(Context context, ImageView imageView, String url) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -88,7 +95,8 @@ public class ImageLoaderUtils {
                 .error(R.drawable.toux2)
                 .centerCrop().transform(new GlideRoundTransformUtil(context)).into(imageView);
     }
-    public static void displayRound(Context context,ImageView imageView, int resId) {
+
+    public static void displayRound(Context context, ImageView imageView, int resId) {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }

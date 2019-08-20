@@ -1,9 +1,9 @@
 package com.jaydenxiao.androidfire.ui.main.fragment;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.aspsine.irecyclerview.IRecyclerView;
 import com.aspsine.irecyclerview.OnLoadMoreListener;
@@ -13,6 +13,7 @@ import com.aspsine.irecyclerview.universaladapter.recyclerview.CommonRecycleView
 import com.aspsine.irecyclerview.widget.LoadMoreFooterView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.bean.PhotoGirl;
 import com.jaydenxiao.androidfire.ui.news.activity.PhotosDetailActivity;

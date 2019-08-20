@@ -2,14 +2,15 @@ package com.wevey.selector.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.ColorRes;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import androidx.annotation.ColorRes;
+import androidx.core.content.ContextCompat;
 
 import com.weavey.utils.ScreenSizeUtils;
 import com.weavey.utils.UiUtils;

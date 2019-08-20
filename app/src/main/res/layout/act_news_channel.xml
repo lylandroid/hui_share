@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/action_bar"
         android:background="@color/colorPrimary"
@@ -30,19 +30,19 @@
         style="@style/news_channel_sort_title"
         android:text="@string/my_channel" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/news_channel_mine_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
+        android:overScrollMode="never"/>
 
     <TextView
         style="@style/news_channel_sort_title"
         android:text="@string/more_channel" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/news_channel_more_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
+        android:overScrollMode="never"></androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

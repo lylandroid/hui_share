@@ -1,16 +1,18 @@
 package com.jaydenxiao.androidfire.ui.news.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.app.AppConstant;
@@ -92,6 +94,7 @@ public class NewsChannelActivity extends BaseActivity<NewsChanelPresenter, NewsC
         mPresenter.lodeChannelsRequest();
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void returnMineNewsChannels(List<NewsChannelTable> newsChannelsMine) {
         channelAdapterMine = new ChannelAdapter(mContext,R.layout.item_news_channel);
@@ -117,6 +120,7 @@ public class NewsChannelActivity extends BaseActivity<NewsChanelPresenter, NewsC
         channelAdapterMine.setItemDragHelperCallback(itemDragHelperCallback);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void returnMoreNewsChannels(List<NewsChannelTable> newsChannelsMore) {
         channelAdapterMore = new ChannelAdapter(mContext,R.layout.item_news_channel);

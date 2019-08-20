@@ -3,7 +3,8 @@ package com.jaydenxiao.common.baseapp;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.multidex.MultiDex;
+
+import androidx.multidex.MultiDex;
 
 /**
  * APPLICATION

@@ -25,7 +25,7 @@
         <!--使用PhotoView，共享动画不平滑-->
     </com.jaydenxiao.androidfire.widget.PullBackLayout>
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 package com.jaydenxiao.androidfire.ui.news.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.aspsine.irecyclerview.IRecyclerView;

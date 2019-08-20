@@ -3,12 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jaydenxiao.common">
 
-    <!--<application
-        android:appComponentFactory="whateverString"
+    <application
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:replace="android:appComponentFactory">
-        <activity android:name=".imagePager.BigImagePagerActivity" />
-    </application>-->
+        android:theme="@style/AppTheme">
+        <!--<activity android:name=".imagePager.BigImagePagerActivity" />-->
+    </application>
 
 </manifest>

@@ -2,7 +2,6 @@ package com.aspsine.irecyclerview.universaladapter.recyclerview;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,13 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.aspsine.irecyclerview.animation.AlphaInAnimation;
+import com.aspsine.irecyclerview.animation.BaseAnimation;
 import com.aspsine.irecyclerview.bean.PageBean;
 import com.aspsine.irecyclerview.universaladapter.DataIO;
 import com.aspsine.irecyclerview.universaladapter.ViewHolderHelper;
-import com.aspsine.irecyclerview.animation.AlphaInAnimation;
-import com.aspsine.irecyclerview.animation.BaseAnimation;
 
 import java.util.ArrayList;
 import java.util.List;

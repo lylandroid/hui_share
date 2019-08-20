@@ -2,13 +2,14 @@ package com.jaydenxiao.common.commonutils;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.jaydenxiao.common.R;
 
@@ -59,11 +60,11 @@ import com.jaydenxiao.common.R;
 //         android:layout_width="wrap_content"
 //         android:layout_height="300dp"
 //         >
-//         <android.support.v4.view.ViewPager android:id="@+id/viewpager"
+//         <ViewPager android:id="@+id/viewpager"
 //         android:layout_width="match_parent"
 //         android:layout_height="300dp"
 //         android:background="#3d3c3c">
-//         </android.support.v4.view.ViewPager>
+//         </ViewPager>
 //         <LinearLayout
 //         android:id="@+id/ly_dots"
 //         android:layout_width="wrap_content"

@@ -1,6 +1,6 @@
 package com.jaydenxiao.common.baserx;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.jaydenxiao.common.commonutils.LogUtils;
 

@@ -1,9 +1,10 @@
 package com.jaydenxiao.androidfire.ui.news.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.content.ContextCompat;
 
 import com.aspsine.irecyclerview.universaladapter.ViewHolderHelper;
 import com.aspsine.irecyclerview.universaladapter.recyclerview.CommonRecycleViewAdapter;
@@ -83,7 +84,7 @@ public class ChannelAdapter  extends CommonRecycleViewAdapter<NewsChannelTable>i
             return false;
         }
         Collections.swap(getAll(), fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
+//        notifyItemMoved(fromPosition, toPosition);
         RxBus.getInstance().post(AppConstant.CHANNEL_SWAP,new ChannelItemMoveEvent(fromPosition, toPosition));
         return true;
     }
