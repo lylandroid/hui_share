@@ -6,4 +6,14 @@
     <color name="primary_text_white">#deffffff</color>
     <!--87%white-->
     <color name="progress_bar_unfinished">#D4D4D4</color>
+
+
+    <color name="application_background">#F4F5F7</color>
+    <color name="title_text_color">#333333</color>
+    <color name="editText_hint_text_color">#CCCCCC</color>
+    <color name="colorAccent">@color/common_red_color</color>
+    <color name="common_red_color">#FF6969</color>
+    <color name="divider_gray">#eeeeee</color>
+    <color name="btn_light_gray">#D6D7DA</color>
+
 </resources>
