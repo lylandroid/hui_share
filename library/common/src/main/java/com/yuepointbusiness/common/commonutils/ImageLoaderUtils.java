@@ -28,7 +28,7 @@ public class ImageLoaderUtils {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        Log.e("MY_TAG",url);
+        //Log.e("MY_TAG",url);
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
