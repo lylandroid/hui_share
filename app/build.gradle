@@ -21,6 +21,7 @@ android {
         }*/
         multiDexEnabled true
     }
+
     buildTypes {
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
@@ -99,6 +100,14 @@ dependencies {
 // (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
     api 'io.reactivex.rxjava2:rxjava:2.2.11'
 
+
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    api(name: 'meglive_still', ext: 'aar')
+    // compile(name: 'attestationsdk-release', ext: 'aar')
+    api(name: 'payegis-did-v7.0.1-release', ext: 'aar')
+    api(name: 'attestationsdk-release', ext: 'aar')
     //my 理财
     api 'com.just.agentweb:agentweb:4.0.2'
     // (必选)
@@ -122,6 +131,6 @@ MobSDK {
         //默认使用GUI，若不使用GUI，通过以下开关关闭
         //gui false
         //若使用GUI的自动填充验证码功能，需打开此设置
-        autoSMS true
+        //autoSMS true
     }
 }

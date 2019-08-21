@@ -76,7 +76,7 @@ public class IdInfoInputActivity extends AppCompatActivity {
             jsonObject.putOpt("name", name);
             jsonObject.putOpt("idCard", idCard);
             jsonObject.putOpt("requestTime", startTime);
-            http(jsonObject.toString());
+            http(phone);
         } catch (Exception e) {
             e.printStackTrace();
             showToast("服务忙，请稍后重试!");
@@ -88,19 +88,28 @@ public class IdInfoInputActivity extends AppCompatActivity {
     public void http(String json) {
         Log.e("MY_TAG", "http json: " + json);
         String sign = getSign(json);
+       /* AttestationSdkApi.startAttestation(MainActivity.this, data,edChanneID,sign,new AttestationSdkManager.OnUserClickLister() {
+            @Override
+            public void onUser(String userid) {
+                Log.d("TAG", "userid===" + userid);
+            }
+        });*/
+
+
     }
 
 
     public String getSign(String json) {
         try {
-            String encryptData = RSAUtils.encryptByPublicKey(json, AppConstant.RSA_PUB_KEY);//加密，输出已经进行Base64 encode处理
+            String encryptData = RSAUtils.encryptByPublicKey(json + System.currentTimeMillis(), AppConstant.RSA_PUB_KEY);//加密，输出已经进行Base64 encode处理
             String signData = RSAUtils.signByPrivateKey(encryptData, AppConstant.RSA_PRIVATE_KEY, "UTF-8");//加签，输出已经进行Base64 encode处理
-            Log.e("MY_TAG", "encryptData: " + encryptData);
-            Log.e("MY_TAG", "signData: " + signData);
-
-            Log.e("MY_TAG", "私钥解密: " + RSAUtils.decryptByPrivateKey(encryptData, AppConstant.RSA_PRIVATE_KEY));
-
-            Log.e("MY_TAG", "公钥数字签名的校验: " + RSAUtils.verifyByPublicKey(json, AppConstant.RSA_PUB_KEY, signData, "UTF-8"));
+//            Log.e("MY_TAG", "encryptData: " + encryptData);
+//            Log.e("MY_TAG", "signData: " + signData);
+//
+//            Log.i("MY_TAG", "私钥解密: " + RSAUtils.decryptByPrivateKey(encryptData, AppConstant.RSA_PRIVATE_KEY));
+////            Log.i("MY_TAG", "私钥解密: " + RSAUtils.decryptRSAToString(encryptData, AppConstant.RSA_PRIVATE_KEY));
+//
+//            Log.e("MY_TAG", "公钥数字签名的校验: " + RSAUtils.verifyByPublicKey(json, AppConstant.RSA_PUB_KEY, signData, "UTF-8"));
             return signData;
         } catch (Exception e) {
             e.printStackTrace();

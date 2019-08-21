@@ -6,6 +6,8 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -16,7 +18,6 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.tbruyelle.rxpermissions2.RxPermissionsFragment;
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
 import com.yuepointbusiness.bean.TabEntity;
@@ -129,7 +130,38 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
+        if (Build.VERSION.SDK_INT >= 23) {
+            int readPhone = checkSelfPermission(Manifest.permission.READ_PHONE_STATE);
+            int receiveSms = checkSelfPermission(Manifest.permission.RECEIVE_SMS);
+            int readContacts = checkSelfPermission(Manifest.permission.READ_CONTACTS);
+            int readSdcard = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+            int requestCode = 0;
+            ArrayList<String> permissions = new ArrayList<String>();
+            if (readPhone != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 0;
+                permissions.add(Manifest.permission.READ_PHONE_STATE);
+            }
+            if (receiveSms != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 1;
+                permissions.add(Manifest.permission.RECEIVE_SMS);
+            }
+            if (readContacts != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 2;
+                permissions.add(Manifest.permission.READ_CONTACTS);
+            }
+            if (readSdcard != PackageManager.PERMISSION_GRANTED) {
+                requestCode |= 1 << 3;
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            if (requestCode > 0) {
+                String[] permission = new String[permissions.size()];
+                this.requestPermissions(permissions.toArray(permission), requestCode);
+                return;
+            }
+        }
     }
+
 
     /**
      * 初始化tab
@@ -306,7 +338,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(!subscribe.isDisposed()){
+        if (!subscribe.isDisposed()) {
             subscribe.dispose();
         }
         ChangeModeController.onDestory();

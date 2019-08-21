@@ -3,10 +3,13 @@ package com.yuepointbusiness.utils;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.security.Key;
 import java.security.KeyFactory;
+import java.security.Security;
 import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -29,7 +32,7 @@ public class RSAUtils {
      */
     public static String signByPrivateKey(String data, String privateKeyStr, String charsetName) throws Exception {
 //        byte[] privateKeyByte = Base64.decodeBase64(privateKeyStr);
-        byte[] privateKeyByte = Base64.decode(privateKeyStr, Base64.NO_WRAP);
+        byte[] privateKeyByte = Base64.decode(privateKeyStr, Base64.DEFAULT);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyByte);//私钥格式，从字节数组中构建的私钥内容
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);//密钥工厂
         RSAPrivateKey privateKey = (RSAPrivateKey) keyFactory.generatePrivate(keySpec);//通过密钥工厂，从指定的密钥中生成RSA格式的私钥对象
@@ -37,7 +40,7 @@ public class RSAUtils {
         signature.initSign(privateKey);//签名算法采用私钥初始化
         signature.update(data.getBytes(charsetName));//将字符串编码为指定字符集字符数组，此处传入被签名的内容
         //return Base64.encodeBase64String(signature.sign());//签名，并将签名后的内容编码为base64的字符串返回
-        return Base64.encodeToString(signature.sign(), Base64.NO_WRAP);//签名，并将签名后的内容编码为base64的字符串返回
+        return Base64.encodeToString(signature.sign(), Base64.DEFAULT);//签名，并将签名后的内容编码为base64的字符串返回
     }
 
     /**
@@ -51,14 +54,14 @@ public class RSAUtils {
     public static boolean verifyByPublicKey(String data, String publicKeyStr, String sign, String charsetName) throws Exception {
         try {
 //            byte[] publicKeyByte = Base64.decodeBase64(publicKeyStr);//公钥字符串解码
-            byte[] publicKeyByte = Base64.decode(publicKeyStr, Base64.NO_WRAP);//公钥字符串解码
+            byte[] publicKeyByte = Base64.decode(publicKeyStr, Base64.DEFAULT);//公钥字符串解码
             X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(publicKeyByte);//x509格式结构的公钥
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);//rsa算法之密钥生成器
             RSAPublicKey publicKey = (RSAPublicKey) keyFactory.generatePublic(encodedKeySpec);//从结构性数据，转换为公钥对象
             Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);//签名算法
             signature.initVerify(publicKey);//初始化验证用的公钥
             signature.update(data.getBytes(charsetName));//更新需要要整的内容
-            return signature.verify(Base64.decode(sign, Base64.NO_WRAP));//判断是否是对应的签名
+            return signature.verify(Base64.decode(sign, Base64.DEFAULT));//判断是否是对应的签名
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -77,7 +80,7 @@ public class RSAUtils {
         if (null == data)
             return null;
         byte[] dataB = data.getBytes("UTF-8");
-        byte[] publicKeyByte = Base64.decode(publicKeyStr, Base64.NO_WRAP);
+        byte[] publicKeyByte = Base64.decode(publicKeyStr, Base64.DEFAULT);
 //        byte[] publicKeyByte = Base64.decodeBase64(publicKeyStr);
         X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(publicKeyByte);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -103,7 +106,7 @@ public class RSAUtils {
         byte[] encryptedData = out.toByteArray();
         out.close();
 //        return Base64.encodeBase64String(encryptedData);
-        return Base64.encodeToString(encryptedData, Base64.NO_WRAP);
+        return Base64.encodeToString(encryptedData, Base64.DEFAULT);
     }
 
     /**
@@ -119,15 +122,20 @@ public class RSAUtils {
             return null;
 //        byte[] dataB = Base64.decodeBase64(data);
 //        byte[] privateKeyByte = Base64.decodeBase64(privateKeyStr);
-        byte[] dataB = Base64.decode(data,Base64.NO_WRAP);
-        byte[] privateKeyByte = Base64.decode(privateKeyStr, Base64.NO_WRAP);
+        byte[] dataB = Base64.decode(data, Base64.DEFAULT);
+        byte[] privateKeyByte = Base64.decode(privateKeyStr, Base64.DEFAULT);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyByte);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+//        RSAPrivateKey privateKey = (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
         RSAPrivateKey privateKey = (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
-        Cipher cipher = Cipher.getInstance(SPECIFIC_KEY_ALGORITHM);
+        Cipher cipher = Cipher.getInstance(SPECIFIC_KEY_ALGORITHM/*, Security.getProvider("BC")*/);
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
+
+        return new String(cipher.doFinal(dataB), "UTF-8");
+
+
         // 模长
-        int key_len = privateKey.getModulus().bitLength() / 8;
+        /*int key_len = privateKey.getModulus().bitLength() / 8;
         byte[] decryptedData = null;
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try {
@@ -139,11 +147,35 @@ public class RSAUtils {
                 bout.write(doFinal);
             }
             decryptedData = bout.toByteArray();
+            new String(decryptedData);
         } finally {
             if (bout != null) {
                 bout.close();
             }
         }
-        return new String(decryptedData);
+        return "";*/
+    }
+
+    public static String decryptRSAToString(String data, String privateKey) {
+
+        String decryptedString = "";
+        try {
+            KeySpec keySpec = new PKCS8EncodedKeySpec(Base64.decode(privateKey.trim().getBytes(), Base64.DEFAULT));
+            KeyFactory keyFac = KeyFactory.getInstance(KEY_ALGORITHM);
+            Key key = keyFac.generatePrivate(keySpec);
+
+            // get an RSA cipher object and print the provider
+            final Cipher cipher = Cipher.getInstance(SPECIFIC_KEY_ALGORITHM);
+            // encrypt the plain text using the public key
+            cipher.init(Cipher.DECRYPT_MODE, key);
+
+            byte[] encryptedBytes = Base64.decode(Base64.decode(data, Base64.DEFAULT), Base64.DEFAULT);
+            byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+            decryptedString = new String(decryptedBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return decryptedString;
     }
 }

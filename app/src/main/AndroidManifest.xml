@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+
     <application
         android:name=".app.AppApplication"
         android:usesCleartextTraffic="true"

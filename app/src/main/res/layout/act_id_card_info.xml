@@ -29,6 +29,7 @@
 
         <EditText
             android:id="@+id/et_phone"
+            android:text="15577778888"
             style="@style/common_editText_style"
             android:layout_marginTop="8dp"
             android:background="@drawable/sel_edittext_underline"
@@ -39,6 +40,7 @@
 
         <EditText
             android:id="@+id/et_name"
+            android:text="张三"
             style="@style/common_editText_style"
             android:layout_marginTop="8dp"
             android:background="@drawable/sel_edittext_underline"
@@ -47,6 +49,7 @@
             android:maxLength="20" />
 
         <EditText
+            android:text="110101199003071153"
             android:id="@+id/et_id_card"
             style="@style/common_editText_style"
             android:layout_marginTop="8dp"
@@ -59,6 +62,7 @@
         <TextView
             android:id="@+id/btn_next"
             style="@style/common_gray_button_style"
+            android:focusable="true"
             android:layout_marginTop="50dp"
             android:text="下一步" />
 

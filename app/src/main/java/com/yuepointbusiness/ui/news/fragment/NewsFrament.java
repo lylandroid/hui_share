@@ -41,6 +41,8 @@ import cn.smssdk.gui.RegisterPage;
  * on 2016.09.17:30
  */
 public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> implements NewsListContract.View, OnRefreshListener, OnLoadMoreListener, View.OnClickListener {
+    public static final String TEMP_CODE = "1319972";
+
     @BindView(R.id.irc)
     IRecyclerView irc;
     @BindView(R.id.loadedTip)
@@ -111,7 +113,7 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
             case R.id.tv_tab_cosmetology:
                 break;
             case R.id.tv_tab_money:
-                //sendCode(getContext(), R.id.tv_tab_money);
+//                sendCode(getContext(), R.id.tv_tab_money);
                 startActivity(new Intent(getActivity(), IdInfoInputActivity.class));
                 break;
         }
@@ -122,7 +124,7 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
         if (TextUtils.isEmpty(SPUtils.getSharedStringData(context, AppConstant.MY_PHONE_KEY))) {
             RegisterPage page = new RegisterPage();
             //如果使用我们的ui，没有申请模板编号的情况下需传null
-            page.setTempCode(null);
+            page.setTempCode(TEMP_CODE);
             page.setRegisterCallback(new EventHandler() {
                 public void afterEvent(int event, int result, Object data) {
                     Log.i("MY_TAG", event + "    " + result + "  " + data);

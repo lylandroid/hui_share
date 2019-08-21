@@ -5,9 +5,9 @@
     <application
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
+        <!--<activity
             android:name="com.mob.tools.MobUIShell"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop" />-->
 
         <!--<activity
             android:name="com.mob.tools.FakeActivity"
