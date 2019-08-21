@@ -3,6 +3,7 @@ package com.yuepointbusiness.ui.news.fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.aspsine.irecyclerview.widget.LoadMoreFooterView;
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
 import com.yuepointbusiness.bean.NewsSummary;
+import com.yuepointbusiness.ui.main.activity.IdInfoInputActivity;
 import com.yuepointbusiness.ui.news.adapter.NewListAdapter;
 import com.yuepointbusiness.ui.news.contract.NewsListContract;
 import com.yuepointbusiness.ui.news.model.NewsListModel;
@@ -109,7 +111,8 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
             case R.id.tv_tab_cosmetology:
                 break;
             case R.id.tv_tab_money:
-                sendCode(getContext(), R.id.tv_tab_money);
+                //sendCode(getContext(), R.id.tv_tab_money);
+                startActivity(new Intent(getActivity(), IdInfoInputActivity.class));
                 break;
         }
 

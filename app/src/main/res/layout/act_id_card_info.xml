@@ -1,46 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/application_background"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_phone"
-        style="@style/common_editText_style"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/sel_edittext_underline"
-        android:hint="请输入手机号"
-        android:inputType="number"
-        android:maxLength="11" />
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="-20dp"
+        android:background="@color/main_color"
+        android:paddingLeft="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="20dp"
+        app:title="个人信息"
+        app:titleTextColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/common_editText_style"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/sel_edittext_underline"
+            android:hint="请输入手机号"
+            android:inputType="number"
+            android:maxLength="11" />
 
 
-    <EditText
-        android:id="@+id/et_name"
-        style="@style/common_editText_style"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/sel_edittext_underline"
-        android:hint="请输入姓名"
-        android:inputType="text"
-        android:maxLength="20" />
+        <EditText
+            android:id="@+id/et_name"
+            style="@style/common_editText_style"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/sel_edittext_underline"
+            android:hint="请输入姓名"
+            android:inputType="text"
+            android:maxLength="20" />
 
-    <EditText
-        android:id="@+id/et_id_card"
-        style="@style/common_editText_style"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/sel_edittext_underline"
-        android:hint="请输入身份证号码"
-        android:inputType="text"
-        android:maxLength="25" />
+        <EditText
+            android:id="@+id/et_id_card"
+            style="@style/common_editText_style"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/sel_edittext_underline"
+            android:hint="请输入身份证号码"
+            android:inputType="text"
+            android:maxLength="25" />
 
 
-    <TextView
-        android:id="@+id/btn_next"
-        style="@style/common_gray_button_style"
-        android:layout_marginTop="50dp"
-        android:text="下一步" />
+        <TextView
+            android:id="@+id/btn_next"
+            style="@style/common_gray_button_style"
+            android:layout_marginTop="50dp"
+            android:text="下一步" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

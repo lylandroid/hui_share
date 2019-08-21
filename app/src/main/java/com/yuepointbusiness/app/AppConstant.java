@@ -42,12 +42,12 @@ public class AppConstant {
     public static final String CHANNEL_ID = "huifx001";
     public static final String bundle_ID = "com.yingshi.app";
 
-    public static final String RSA_PUB = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCUEOuuv" +
+    public static final String RSA_PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCUEOuuv" +
             "zFO1kd93JtUA6FcjR34dN8yqchEKnZ5kwGUdZyPo5p8koaTjrlmD8po7kTvScS8gYCZgbMCxBFt" +
             "vsMBi53Vglo+BVvd/rYUGQVr7ZUsFHDIUc7vrcBYmYmrUhrQ+wmA/KfaqMEWolqJVCoZisi3br" +
             "y5MP2bdH1Hnf72YwIDAQAB";
 
-    public static final String RSA_PRIVATE =/* "-----BEGIN PRIVATE KEY-----\n" +*/
+    public static final String RSA_PRIVATE_KEY =/* "-----BEGIN PRIVATE KEY-----\n" +*/
             "MIIJQQIBADANBgkqhkiG9w0BAQEFAASCCSswggknAgEAAoICAQC4btgE/olvz/QM" +
             "d7Kn0lOctbcHOiilatciTmevS0MeCjSWP1LiunYAnuW9VSV8SF2TYmWWBrPR5fvq" +
             "9zOvfOjBwMy8NMrlqTC2pZ2RkxxaB4fc4R2G05PCxxOlAh9gP7pMxKHsAe1wihvj" +

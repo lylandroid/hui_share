@@ -17,7 +17,7 @@ import com.yuepointbusiness.common.base.BaseActivity;
 
 import butterknife.BindView;
 
-import static com.yuepointbusiness.androidfire.R.layout.act_about;
+//import static com.yuepointbusiness.androidfire.R.layout.act_about;
 
 /**
  * des:关于
@@ -57,7 +57,7 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return act_about;
+        return R.layout.act_about;
     }
 
     @Override

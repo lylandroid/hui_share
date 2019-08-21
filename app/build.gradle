@@ -7,7 +7,7 @@ def releaseTime() {
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.yuepointbusiness"
 //        applicationId "jaydenxiao.com.androidfire"
@@ -64,6 +64,10 @@ android {
         abortOnError false
     }
 
+    /*jackOptions {
+        enabled true
+    }*/
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -87,6 +91,23 @@ dependencies {
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     api 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+// Because RxAndroid releases are few and far between, it is recommended you also
+// explicitly depend on RxJava's latest version for bug fixes and new features.
+// (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
+    api 'io.reactivex.rxjava2:rxjava:2.2.11'
+
+    //my 理财
+    api 'com.just.agentweb:agentweb:4.0.2'
+    // (必选)
+    api 'com.just.agentweb:download:4.0.2'
+    // (可选)
+    api 'com.just.agentweb:filechooser:4.0.2'
+    // (可选)
+
+
 }
 
 // 添加插件
@@ -101,6 +122,6 @@ MobSDK {
         //默认使用GUI，若不使用GUI，通过以下开关关闭
         //gui false
         //若使用GUI的自动填充验证码功能，需打开此设置
-        //autoSMS true
+        autoSMS true
     }
 }

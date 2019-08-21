@@ -272,3 +272,8 @@
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -keep class okio.**{*;}
 -dontwarn okio.**
+
+
+-keep class com.mob.**{*;}
+-keep class cn.smssdk.**{*;}
+-dontwarn com.mob.**

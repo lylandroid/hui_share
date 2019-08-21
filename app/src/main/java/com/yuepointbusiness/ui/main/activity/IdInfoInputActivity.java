@@ -2,6 +2,7 @@ package com.yuepointbusiness.ui.main.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,6 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.yuepointbusiness.R;
+import com.yuepointbusiness.app.AppConstant;
+import com.yuepointbusiness.utils.RSAUtils;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,12 +47,12 @@ public class IdInfoInputActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-                submit();
+                check();
                 break;
         }
     }
 
-    private void submit() {
+    private void check() {
         String phone = mEtPhone.getText().toString();
         String name = mEtName.getText().toString();
         String idCard = mEtIdCard.getText().toString();
@@ -64,13 +69,43 @@ public class IdInfoInputActivity extends AppCompatActivity {
             showToast("请输入身份证号码");
             return;
         }
-        long startTime = System.currentTimeMillis();
+        try {
+            long startTime = System.currentTimeMillis();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("mobile", phone);
+            jsonObject.putOpt("name", name);
+            jsonObject.putOpt("idCard", idCard);
+            jsonObject.putOpt("requestTime", startTime);
+            http(jsonObject.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            showToast("服务忙，请稍后重试!");
+        }
 
 //        http();
     }
 
     public void http(String json) {
+        Log.e("MY_TAG", "http json: " + json);
+        String sign = getSign(json);
+    }
 
+
+    public String getSign(String json) {
+        try {
+            String encryptData = RSAUtils.encryptByPublicKey(json, AppConstant.RSA_PUB_KEY);//加密，输出已经进行Base64 encode处理
+            String signData = RSAUtils.signByPrivateKey(encryptData, AppConstant.RSA_PRIVATE_KEY, "UTF-8");//加签，输出已经进行Base64 encode处理
+            Log.e("MY_TAG", "encryptData: " + encryptData);
+            Log.e("MY_TAG", "signData: " + signData);
+
+            Log.e("MY_TAG", "私钥解密: " + RSAUtils.decryptByPrivateKey(encryptData, AppConstant.RSA_PRIVATE_KEY));
+
+            Log.e("MY_TAG", "公钥数字签名的校验: " + RSAUtils.verifyByPublicKey(json, AppConstant.RSA_PUB_KEY, signData, "UTF-8"));
+            return signData;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 

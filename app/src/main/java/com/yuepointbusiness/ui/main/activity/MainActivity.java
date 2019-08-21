@@ -1,5 +1,6 @@
 package com.yuepointbusiness.ui.main.activity;
 
+import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -14,17 +15,19 @@ import androidx.fragment.app.FragmentTransaction;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissionsFragment;
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
 import com.yuepointbusiness.bean.TabEntity;
-import com.yuepointbusiness.ui.main.fragment.CareMainFragment;
-import com.yuepointbusiness.ui.main.fragment.NewsMainFragment;
-import com.yuepointbusiness.ui.main.fragment.PhotosMainFragment;
-import com.yuepointbusiness.ui.main.fragment.VideoMainFragment;
 import com.yuepointbusiness.common.base.BaseActivity;
 import com.yuepointbusiness.common.baseapp.AppConfig;
 import com.yuepointbusiness.common.commonutils.LogUtils;
 import com.yuepointbusiness.common.daynightmodeutils.ChangeModeController;
+import com.yuepointbusiness.ui.main.fragment.CareMainFragment;
+import com.yuepointbusiness.ui.main.fragment.NewsMainFragment;
+import com.yuepointbusiness.ui.main.fragment.PhotosMainFragment;
+import com.yuepointbusiness.ui.main.fragment.VideoMainFragment;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,7 @@ import butterknife.BindView;
 import cn.hugeterry.updatefun.UpdateFunGO;
 import cn.hugeterry.updatefun.config.UpdateKey;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import io.reactivex.disposables.Disposable;
 import rx.functions.Action1;
 
 /**
@@ -43,11 +47,11 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_layout)
     CommonTabLayout tabLayout;
 
-    private String[] mTitles = {"首页", "美女","视频","关注"};
+    private String[] mTitles = {"首页", "美女", "视频", "关注"};
     private int[] mIconUnselectIds = {
-            R.mipmap.ic_home_normal,R.mipmap.ic_girl_normal,R.mipmap.ic_video_normal,R.mipmap.ic_care_normal};
+            R.mipmap.ic_home_normal, R.mipmap.ic_girl_normal, R.mipmap.ic_video_normal, R.mipmap.ic_care_normal};
     private int[] mIconSelectIds = {
-            R.mipmap.ic_home_selected,R.mipmap.ic_girl_selected, R.mipmap.ic_video_selected,R.mipmap.ic_care_selected};
+            R.mipmap.ic_home_selected, R.mipmap.ic_girl_selected, R.mipmap.ic_video_selected, R.mipmap.ic_care_selected};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     private NewsMainFragment newsMainFragment;
@@ -55,12 +59,15 @@ public class MainActivity extends BaseActivity {
     private VideoMainFragment videoMainFragment;
     private CareMainFragment careMainFragment;
     private static int tabLayoutHeight;
+    private RxPermissions rxPermissions;
+    private Disposable subscribe;
 
     /**
      * 入口
+     *
      * @param activity
      */
-    public static void startAction(Activity activity){
+    public static void startAction(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.fade_in,
@@ -76,6 +83,7 @@ public class MainActivity extends BaseActivity {
     public void initPresenter() {
 
     }
+
     @Override
     public void initView() {
         //此处填上在http://fir.im/注册账号后获得的API_TOKEN以及APP的应用ID
@@ -87,15 +95,17 @@ public class MainActivity extends BaseActivity {
         //初始化菜单
         initTab();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         //切换daynight模式要立即变色的页面
-        ChangeModeController.getInstance().init(this,R.attr.class);
+        ChangeModeController.getInstance().init(this, R.attr.class);
         super.onCreate(savedInstanceState);
+        rxPermissions = new RxPermissions(this);
         //初始化frament
         initFragment(savedInstanceState);
-        tabLayout.measure(0,0);
-        tabLayoutHeight=tabLayout.getMeasuredHeight();
+        tabLayout.measure(0, 0);
+        tabLayoutHeight = tabLayout.getMeasuredHeight();
         //监听菜单显示或隐藏
         mRxManager.on(AppConstant.MENU_SHOW_HIDE, new Action1<Boolean>() {
 
@@ -104,7 +114,23 @@ public class MainActivity extends BaseActivity {
                 startAnimation(hideOrShow);
             }
         });
+        requestPermissions();
     }
+
+    public void requestPermissions() {
+        if (!rxPermissions.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
+                || !rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            subscribe = rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(granted -> {
+                if (granted) { // Always tr
+                    // ue pre-M
+                    // I can control the camera now
+                } else {
+                    // Oups permission denied
+                }
+            });
+        }
+    }
+
     /**
      * 初始化tab
      */
@@ -119,11 +145,13 @@ public class MainActivity extends BaseActivity {
             public void onTabSelect(int position) {
                 SwitchTo(position);
             }
+
             @Override
             public void onTabReselect(int position) {
             }
         });
     }
+
     /**
      * 初始化碎片
      */
@@ -198,29 +226,30 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 菜单显示隐藏动画
+     *
      * @param showOrHide
      */
-    private void startAnimation(boolean showOrHide){
+    private void startAnimation(boolean showOrHide) {
         final ViewGroup.LayoutParams layoutParams = tabLayout.getLayoutParams();
         ValueAnimator valueAnimator;
         ObjectAnimator alpha;
-        if(!showOrHide){
-             valueAnimator = ValueAnimator.ofInt(tabLayoutHeight, 0);
+        if (!showOrHide) {
+            valueAnimator = ValueAnimator.ofInt(tabLayoutHeight, 0);
             alpha = ObjectAnimator.ofFloat(tabLayout, "alpha", 1, 0);
-        }else{
-             valueAnimator = ValueAnimator.ofInt(0, tabLayoutHeight);
+        } else {
+            valueAnimator = ValueAnimator.ofInt(0, tabLayoutHeight);
             alpha = ObjectAnimator.ofFloat(tabLayout, "alpha", 0, 1);
         }
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                layoutParams.height= (int) valueAnimator.getAnimatedValue();
+                layoutParams.height = (int) valueAnimator.getAnimatedValue();
                 tabLayout.setLayoutParams(layoutParams);
             }
         });
-        AnimatorSet animatorSet=new AnimatorSet();
+        AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(500);
-        animatorSet.playTogether(valueAnimator,alpha);
+        animatorSet.playTogether(valueAnimator, alpha);
         animatorSet.start();
     }
 
@@ -234,6 +263,7 @@ public class MainActivity extends BaseActivity {
         }
         super.onBackPressed();
     }
+
     /**
      * 监听返回键
      *
@@ -276,6 +306,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(!subscribe.isDisposed()){
+            subscribe.dispose();
+        }
         ChangeModeController.onDestory();
     }
 }

@@ -1,9 +1,9 @@
 package com.yuepointbusiness.app;
 
-import com.yuepointbusiness.androidfire.BuildConfig;
+import com.mob.MobSDK;
+import com.yuepointbusiness.BuildConfig;
 import com.yuepointbusiness.common.baseapp.BaseApplication;
 import com.yuepointbusiness.common.commonutils.LogUtils;
-import com.mob.MobSDK;
 
 /**
  * APPLICATION

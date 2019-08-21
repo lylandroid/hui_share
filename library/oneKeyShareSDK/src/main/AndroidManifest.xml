@@ -8,5 +8,9 @@
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:launchMode="singleTop" />
+
+        <!--<activity
+            android:name="com.mob.tools.FakeActivity"
+            android:launchMode="singleTop" />-->
     </application>
 </manifest>
