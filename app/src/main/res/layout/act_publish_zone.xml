@@ -5,7 +5,7 @@
     android:background="?attr/dayNightBackground"
     android:orientation="vertical">
 
-    <com.jaydenxiao.common.commonwidget.NormalTitleBar
+    <com.yuepointbusiness.common.commonwidget.NormalTitleBar
         android:id="@+id/ntb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -31,7 +31,7 @@
         android:layout_height="2dp"
         android:layout_below="@+id/et_content" />
 
-    <com.jaydenxiao.common.commonwidget.NoScrollGridView
+    <com.yuepointbusiness.common.commonwidget.NoScrollGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -21,7 +21,7 @@ import androidx.core.view.MotionEventCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aspsine.irecyclerview.widget.LoadMoreFooterView;
-import com.jaydenxiao.common.commonutils.LogUtils;
+import com.yuepointbusiness.common.commonutils.LogUtils;
 
 /**
  * Created by aspsine on 16/3/3.

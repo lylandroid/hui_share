@@ -11,7 +11,7 @@ android:layout_height="match_parent">
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="?attr/dayNightBackground">
-    <com.jaydenxiao.common.commonwidget.NormalTitleBar
+    <com.yuepointbusiness.common.commonwidget.NormalTitleBar
         android:id="@+id/ntb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -25,7 +25,7 @@ android:layout_height="match_parent">
         app:refreshEnabled="true"
         />
 
-    <com.jaydenxiao.common.commonwidget.LoadingTip
+    <com.yuepointbusiness.common.commonwidget.LoadingTip
         android:id="@+id/loadedTip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

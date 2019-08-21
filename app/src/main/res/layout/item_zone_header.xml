@@ -16,7 +16,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/bgkobe"
             android:visibility="visible" />
-        <com.jaydenxiao.common.commonwidget.WaveView
+        <com.yuepointbusiness.common.commonwidget.WaveView
             android:id="@+id/wave_view"
             android:layout_width="match_parent"
             android:layout_height="15dp"

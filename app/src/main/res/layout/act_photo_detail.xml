@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:background="@color/black">
 
-    <com.jaydenxiao.androidfire.widget.PullBackLayout
+    <com.yuepointbusiness.widget.PullBackLayout
         android:id="@+id/pull_back_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:transitionName="@string/transition_photos" />
         <!--使用PhotoView，共享动画不平滑-->
-    </com.jaydenxiao.androidfire.widget.PullBackLayout>
+    </com.yuepointbusiness.widget.PullBackLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

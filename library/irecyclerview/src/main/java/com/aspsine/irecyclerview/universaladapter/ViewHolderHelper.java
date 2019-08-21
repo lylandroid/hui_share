@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jaydenxiao.common.commonutils.ImageLoaderUtils;
+import com.yuepointbusiness.common.commonutils.ImageLoaderUtils;
 
 import java.io.File;
 

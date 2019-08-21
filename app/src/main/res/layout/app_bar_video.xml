@@ -42,6 +42,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_arrow_upward"
         app:backgroundTint="@color/main_color"
-        app:layout_behavior="com.jaydenxiao.androidfire.widget.ScrollAwareFABBehavior" />
+        app:layout_behavior=".widget.ScrollAwareFABBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

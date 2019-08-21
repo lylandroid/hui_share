@@ -17,7 +17,7 @@
         app:refreshHeaderLayout="@layout/layout_irecyclerview_refresh_header"
         app:refreshEnabled="true"
         />
-    <com.jaydenxiao.common.commonwidget.LoadingTip
+    <com.yuepointbusiness.common.commonwidget.LoadingTip
         android:id="@+id/loadedTip"
         android:layout_gravity="center"
         android:gravity="center"
