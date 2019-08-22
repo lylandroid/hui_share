@@ -97,44 +97,18 @@ public class IdInfoInputActivity extends AppCompatActivity {
     public void http(String mobile) {
         try {
             long timestamp = System.currentTimeMillis();
-            String encMobile = getEncMobile(mobile, timestamp);
-            String sign = getSign(mobile, timestamp);
-            boolean verifyTrue = RSAUtils.verifyByPublicKey(mobile + timestamp, AppConstant.RSA_PUB_KEY, sign, "UTF-8");//验签
-
-            Log.i("MY_TAG", "encMobile: " + encMobile);
-            Log.i("MY_TAG", "sign: " + sign);
-            Log.i("MY_TAG", "verifyTrue: " + verifyTrue);
-            AttestationSdkApi.startAttestation(this, encMobile, AppConstant.CHANNEL_ID, sign, new AttestationSdkManager.OnUserClickLister() {
-                @Override
-                public void onUser(String userid) {
-                    Log.e("MY_TAG", "onUser(String userid) : " + userid);
-                }
+            String encMobile = RSAUtils.encryptByPublicKey(mobile + timestamp, AppConstant.RSA_PUB_KEY);
+            String sign = RSAUtils.signByPrivateKey(encMobile, AppConstant.RSA_PRIVATE_KEY, "utf-8");
+            boolean verifyTrue = RSAUtils.verifyByPublicKey(encMobile, AppConstant.RSA_MY_PUB_KEY, sign, "UTF-8");//验签
+//            Log.i("MY_TAG", "encMobile: " + encMobile);
+//            Log.i("MY_TAG", "sign: " + sign);
+//            Log.i("MY_TAG", "verifyTrue: " + verifyTrue);
+            AttestationSdkApi.startAttestation(this, encMobile, AppConstant.CHANNEL_ID, sign, userid -> {
+                Log.e("MY_TAG", "onUser(String userid) : " + userid);
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-    }
-
-    public String getEncMobile(String mobile, long timestamp) {
-        try {
-            return RSAUtils.encryptByPublicKey(mobile + timestamp, AppConstant.RSA_PUB_KEY);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-
-    }
-
-
-    public String getSign(String mobile, long timestamp) {
-        try {
-            return RSAUtils.signByPrivateKey(mobile + timestamp, AppConstant.RSA_PRIVATE_KEY, "utf-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
 
