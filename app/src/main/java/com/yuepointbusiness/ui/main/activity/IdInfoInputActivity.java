@@ -15,6 +15,7 @@ import com.megvii.demo.api.AttestationSdkApi;
 import com.megvii.demo.api.AttestationSdkManager;
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
+import com.yuepointbusiness.common.commonutils.SPUtils;
 import com.yuepointbusiness.utils.RSAUtils;
 
 import org.json.JSONObject;
@@ -50,6 +51,10 @@ public class IdInfoInputActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(v -> {
             finish();
         });
+        String mobile = SPUtils.getSharedStringData(this, AppConstant.MY_PHONE_KEY);
+        if (!TextUtils.isEmpty(mobile)) {
+            mEtPhone.setText(mobile);
+        }
     }
 
     @OnClick(R.id.btn_next)

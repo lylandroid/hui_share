@@ -17,13 +17,13 @@ import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
 import com.yuepointbusiness.bean.NewsSummary;
 import com.yuepointbusiness.ui.main.activity.IdInfoInputActivity;
+import com.yuepointbusiness.ui.main.activity.MainActivity;
 import com.yuepointbusiness.ui.news.adapter.NewListAdapter;
 import com.yuepointbusiness.ui.news.contract.NewsListContract;
 import com.yuepointbusiness.ui.news.model.NewsListModel;
 import com.yuepointbusiness.ui.news.presenter.NewsListPresenter;
 import com.yuepointbusiness.common.base.BaseFragment;
 import com.yuepointbusiness.common.commonutils.SPUtils;
-import com.yuepointbusiness.common.commonutils.ToastUitl;
 import com.yuepointbusiness.common.commonwidget.LoadingTip;
 
 import java.util.ArrayList;
@@ -113,58 +113,12 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
             case R.id.tv_tab_cosmetology:
                 break;
             case R.id.tv_tab_money:
-                sendCode(getContext(), R.id.tv_tab_money);
-//                startActivity(new Intent(getActivity(), IdInfoInputActivity.class));
+                ((MainActivity) getActivity()).login(R.id.tv_tab_money);
                 break;
         }
 
     }
 
-    public void sendCode(Context context, int resId) {
-        if (TextUtils.isEmpty(SPUtils.getSharedStringData(context, AppConstant.MY_PHONE_KEY))) {
-            RegisterPage page = new RegisterPage();
-            //如果使用我们的ui，没有申请模板编号的情况下需传null
-            page.setTempCode(/*TEMP_CODE*/null);
-            page.setRegisterCallback(new EventHandler() {
-                public void afterEvent(int event, int result, Object data) {
-                    Log.i("MY_TAG", event + "    " + result + "  " + data);
-                    if (result == SMSSDK.RESULT_COMPLETE) {
-                        // 处理成功的结果
-                        HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-                        String country = (String) phoneMap.get("country"); // 国家代码，如“86”
-                        String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
-                        SPUtils.setSharedStringData(getContext(), AppConstant.MY_PHONE_KEY, phone);
-                        loginSuccess(resId);
-                    } else {
-                        showShortToast("登录失败，请稍候重试");
-                    }
-                }
-            });
-            page.show(context);
-        } else {
-            loginSuccess(resId);
-        }
-
-    }
-
-    public void loginSuccess(int resId) {
-        switch (resId) {
-            case R.id.tv_tab_education:
-                break;
-            case R.id.tv_tab_medicine:
-                break;
-            case R.id.tv_tab_cosmetology:
-                break;
-            case R.id.tv_tab_money:
-                inMoney();
-                break;
-        }
-    }
-
-    //理财相关逻辑处理
-    public void inMoney() {
-        startActivity(new Intent(getActivity(), IdInfoInputActivity.class));
-    }
 
     @Override
     public void returnNewsListData(List<NewsSummary> newsSummaries) {

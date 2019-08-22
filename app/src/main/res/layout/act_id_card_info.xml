@@ -30,10 +30,10 @@
             style="@style/common_editText_style"
             android:layout_marginTop="8dp"
             android:background="@drawable/sel_edittext_underline"
+            android:enabled="false"
             android:hint="请输入手机号"
             android:inputType="number"
-            android:maxLength="11"
-            android:text="15577778888" />
+            android:maxLength="11" />
 
 
         <EditText
@@ -43,8 +43,7 @@
             android:background="@drawable/sel_edittext_underline"
             android:hint="请输入姓名"
             android:inputType="text"
-            android:maxLength="20"
-            android:text="张三" />
+            android:maxLength="20" />
 
         <EditText
             android:id="@+id/et_id_card"
@@ -53,8 +52,7 @@
             android:background="@drawable/sel_edittext_underline"
             android:hint="请输入身份证号码"
             android:inputType="text"
-            android:maxLength="25"
-            android:text="110101199003071153" />
+            android:maxLength="25" />
 
 
         <TextView

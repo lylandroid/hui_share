@@ -15,5 +15,8 @@
     <color name="common_red_color">#FF6969</color>
     <color name="divider_gray">#eeeeee</color>
     <color name="btn_light_gray">#D6D7DA</color>
+    <color name="common_text_color">#ff333333</color>
+    <color name="color_666666">#666666</color>
+    <color name="common_gray_color">#CCCCCC</color>
 
 </resources>

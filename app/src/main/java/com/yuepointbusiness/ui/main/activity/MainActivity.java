@@ -2,10 +2,13 @@ package com.yuepointbusiness.ui.main.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -20,6 +23,7 @@ import com.yuepointbusiness.bean.TabEntity;
 import com.yuepointbusiness.common.base.BaseActivity;
 import com.yuepointbusiness.common.baseapp.AppConfig;
 import com.yuepointbusiness.common.commonutils.LogUtils;
+import com.yuepointbusiness.common.commonutils.SPUtils;
 import com.yuepointbusiness.common.daynightmodeutils.ChangeModeController;
 import com.yuepointbusiness.ui.main.fragment.CareMainFragment;
 import com.yuepointbusiness.ui.main.fragment.NewsMainFragment;
@@ -27,9 +31,13 @@ import com.yuepointbusiness.ui.main.fragment.PhotosMainFragment;
 import com.yuepointbusiness.ui.main.fragment.VideoMainFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import cn.hugeterry.updatefun.config.UpdateKey;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import io.reactivex.disposables.Disposable;
 import rx.functions.Action1;
@@ -316,6 +324,52 @@ public class MainActivity extends BaseActivity {
             LogUtils.loge("onSaveInstanceState进来了2");
             outState.putInt(AppConstant.HOME_CURRENT_TAB_POSITION, tabLayout.getCurrentTab());
         }
+    }
+
+    public void login(int resId) {
+        if (TextUtils.isEmpty(SPUtils.getSharedStringData(this, AppConstant.MY_PHONE_KEY))) {
+            RegisterPage page = new RegisterPage();
+            //如果使用我们的ui，没有申请模板编号的情况下需传null
+            page.setTempCode(/*TEMP_CODE*/null);
+            page.setRegisterCallback(new EventHandler() {
+                public void afterEvent(int event, int result, Object data) {
+                    Log.i("MY_TAG", event + "    " + result + "  " + data);
+                    if (result == SMSSDK.RESULT_COMPLETE) {
+                        // 处理成功的结果
+                        HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+                        String country = (String) phoneMap.get("country"); // 国家代码，如“86”
+                        String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
+                        SPUtils.setSharedStringData(MainActivity.this, AppConstant.MY_PHONE_KEY, phone);
+                        loginSuccess(resId);
+                    } else {
+                        showShortToast("登录失败，请稍候重试");
+                    }
+                }
+            });
+            page.show(this);
+        } else {
+            loginSuccess(resId);
+        }
+
+    }
+
+    public void loginSuccess(int resId) {
+        switch (resId) {
+            case R.id.tv_tab_education:
+                break;
+            case R.id.tv_tab_medicine:
+                break;
+            case R.id.tv_tab_cosmetology:
+                break;
+            case R.id.tv_tab_money:
+                inMoney();
+                break;
+        }
+    }
+
+    //理财相关逻辑处理
+    public void inMoney() {
+        startActivity(new Intent(this, IdInfoInputActivity.class));
     }
 
     @Override
