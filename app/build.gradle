@@ -11,10 +11,10 @@ android {
     defaultConfig {
         applicationId "com.yuepointbusiness"
 //        applicationId "jaydenxiao.com.androidfire"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 1
+        versionName "1.0"
         /*compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
@@ -26,23 +26,29 @@ android {
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //混淆
-            minifyEnabled true
+            minifyEnabled false
             //Zipalign优化
-            zipAlignEnabled true
+            zipAlignEnabled false
             // 移除无用的resource文件
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //apk命名
-            /* android.applicationVariants.all { variant ->
-                 variant.outputs.each { output ->
-                     def outputFile = output.outputFile
-                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                         //这里修改apk文件名
-                         def fileName = "AndroidFire-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
-                         output.outputFile = new File(outputFile.parent, fileName)
-                     }
-                 }
-             }*/
+            /*android.applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        //这里修改apk文件名
+                        def fileName = "huifx-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }*/
+
+        }
+        android.applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                outputFileName = "huifx_${buildTime()}.apk"
+            }
         }
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
@@ -78,6 +84,12 @@ android {
          resolutionStrategy.force 'com.android.support:support-v4:28.0.0'
          // the above lib may be old dependencies version
      }*/
+}
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd')
+    return formattedDate
 }
 
 dependencies {

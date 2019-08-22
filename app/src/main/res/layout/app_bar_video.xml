@@ -11,7 +11,7 @@
         android:background="@color/main_color"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/main_color"
@@ -23,25 +23,41 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:tabBackground="@color/main_color"
-                app:tabIndicatorColor="@color/white"></com.google.android.material.tabs.TabLayout>
-        </LinearLayout>
+                app:tabIndicatorColor="@color/white" />
+        </LinearLayout>-->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_color"
+            app:contentInsetLeft="10dp"
+            app:contentInsetStart="15dp"
+            app:contentInsetStartWithNavigation="10dp"
+            app:title="医疗"
+            app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <com.yuepointbusiness.widget.BaseWebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!--<androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_arrow_upward"
-        app:backgroundTint="@color/main_color"
-        app:layout_behavior=".widget.ScrollAwareFABBehavior" />
+    <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+         android:id="@+id/fab"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="bottom|end"
+         android:layout_margin="@dimen/fab_margin"
+         android:src="@drawable/ic_arrow_upward"
+         app:backgroundTint="@color/main_color"
+         app:layout_behavior=".widget.ScrollAwareFABBehavior" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

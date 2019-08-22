@@ -13,10 +13,13 @@
         android:name=".app.AppApplication"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
+        tools:replace="android:icon"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
         <activity
             android:name=".ui.main.activity.SplashActivity"

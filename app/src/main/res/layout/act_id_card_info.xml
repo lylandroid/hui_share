@@ -7,16 +7,14 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="-20dp"
         android:background="@color/main_color"
-        android:paddingLeft="0dp"
         app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="20dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@mipmap/icon_white_back"
         app:title="个人信息"
         app:titleTextColor="@color/white" />
 
@@ -29,41 +27,41 @@
 
         <EditText
             android:id="@+id/et_phone"
-            android:text="15577778888"
             style="@style/common_editText_style"
             android:layout_marginTop="8dp"
             android:background="@drawable/sel_edittext_underline"
             android:hint="请输入手机号"
             android:inputType="number"
-            android:maxLength="11" />
+            android:maxLength="11"
+            android:text="15577778888" />
 
 
         <EditText
             android:id="@+id/et_name"
-            android:text="张三"
             style="@style/common_editText_style"
             android:layout_marginTop="8dp"
             android:background="@drawable/sel_edittext_underline"
             android:hint="请输入姓名"
             android:inputType="text"
-            android:maxLength="20" />
+            android:maxLength="20"
+            android:text="张三" />
 
         <EditText
-            android:text="110101199003071153"
             android:id="@+id/et_id_card"
             style="@style/common_editText_style"
             android:layout_marginTop="8dp"
             android:background="@drawable/sel_edittext_underline"
             android:hint="请输入身份证号码"
             android:inputType="text"
-            android:maxLength="25" />
+            android:maxLength="25"
+            android:text="110101199003071153" />
 
 
         <TextView
             android:id="@+id/btn_next"
             style="@style/common_gray_button_style"
-            android:focusable="true"
             android:layout_marginTop="50dp"
+            android:focusable="true"
             android:text="下一步" />
 
     </LinearLayout>

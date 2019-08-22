@@ -1,16 +1,12 @@
 package com.yuepointbusiness.ui.main.activity;
 
 import android.Manifest;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -33,7 +29,6 @@ import com.yuepointbusiness.ui.main.fragment.VideoMainFragment;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import cn.hugeterry.updatefun.UpdateFunGO;
 import cn.hugeterry.updatefun.config.UpdateKey;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import io.reactivex.disposables.Disposable;
@@ -48,7 +43,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_layout)
     CommonTabLayout tabLayout;
 
-    private String[] mTitles = {"首页", "美女", "视频", "关注"};
+    private String[] mTitles = {"首页", "医疗", "美女", "关注"};
     private int[] mIconUnselectIds = {
             R.mipmap.ic_home_normal, R.mipmap.ic_girl_normal, R.mipmap.ic_video_normal, R.mipmap.ic_care_normal};
     private int[] mIconSelectIds = {
@@ -92,7 +87,7 @@ public class MainActivity extends BaseActivity {
         UpdateKey.APP_ID = AppConfig.APP_FIRE_ID;
         //如果你想通过Dialog来进行下载，可以如下设置
 //        UpdateKey.DialogOrNotification=UpdateKey.WITH_DIALOG;
-        UpdateFunGO.init(this);
+//        UpdateFunGO.init(this);
         //初始化菜单
         initTab();
     }
@@ -227,20 +222,20 @@ public class MainActivity extends BaseActivity {
                 transaction.show(newsMainFragment);
                 transaction.commitAllowingStateLoss();
                 break;
-            //美女
-            case 1:
-                transaction.hide(newsMainFragment);
-                transaction.hide(videoMainFragment);
-                transaction.hide(careMainFragment);
-                transaction.show(photosMainFragment);
-                transaction.commitAllowingStateLoss();
-                break;
             //视频
-            case 2:
+            case 1:
                 transaction.hide(newsMainFragment);
                 transaction.hide(photosMainFragment);
                 transaction.hide(careMainFragment);
                 transaction.show(videoMainFragment);
+                transaction.commitAllowingStateLoss();
+                break;
+            //美女
+            case 2:
+                transaction.hide(newsMainFragment);
+                transaction.hide(videoMainFragment);
+                transaction.hide(careMainFragment);
+                transaction.show(photosMainFragment);
                 transaction.commitAllowingStateLoss();
                 break;
             //关注
@@ -262,7 +257,7 @@ public class MainActivity extends BaseActivity {
      * @param showOrHide
      */
     private void startAnimation(boolean showOrHide) {
-        final ViewGroup.LayoutParams layoutParams = tabLayout.getLayoutParams();
+       /* final ViewGroup.LayoutParams layoutParams = tabLayout.getLayoutParams();
         ValueAnimator valueAnimator;
         ObjectAnimator alpha;
         if (!showOrHide) {
@@ -282,7 +277,7 @@ public class MainActivity extends BaseActivity {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(500);
         animatorSet.playTogether(valueAnimator, alpha);
-        animatorSet.start();
+        animatorSet.start();*/
     }
 
     /**
@@ -326,13 +321,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        UpdateFunGO.onResume(this);
+//        UpdateFunGO.onResume(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        UpdateFunGO.onStop(this);
+//        UpdateFunGO.onStop(this);
     }
 
     @Override

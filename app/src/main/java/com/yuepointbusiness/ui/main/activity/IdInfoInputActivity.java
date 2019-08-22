@@ -9,7 +9,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.megvii.demo.api.AttestationSdkApi;
+import com.megvii.demo.api.AttestationSdkManager;
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
 import com.yuepointbusiness.utils.RSAUtils;
@@ -29,6 +32,9 @@ public class IdInfoInputActivity extends AppCompatActivity {
 
     private Unbinder unbinder;
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     @BindView(R.id.et_phone)
     EditText mEtPhone;
     @BindView(R.id.et_name)
@@ -41,6 +47,9 @@ public class IdInfoInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_id_card_info);
         unbinder = ButterKnife.bind(this);
+        mToolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
     }
 
     @OnClick(R.id.btn_next)
@@ -85,32 +94,43 @@ public class IdInfoInputActivity extends AppCompatActivity {
 //        http();
     }
 
-    public void http(String json) {
-        Log.e("MY_TAG", "http json: " + json);
-        String sign = getSign(json);
-       /* AttestationSdkApi.startAttestation(MainActivity.this, data,edChanneID,sign,new AttestationSdkManager.OnUserClickLister() {
-            @Override
-            public void onUser(String userid) {
-                Log.d("TAG", "userid===" + userid);
-            }
-        });*/
+    public void http(String mobile) {
+        try {
+            long timestamp = System.currentTimeMillis();
+            String encMobile = getEncMobile(mobile, timestamp);
+            String sign = getSign(mobile, timestamp);
+            boolean verifyTrue = RSAUtils.verifyByPublicKey(mobile + timestamp, AppConstant.RSA_PUB_KEY, sign, "UTF-8");//验签
+
+            Log.i("MY_TAG", "encMobile: " + encMobile);
+            Log.i("MY_TAG", "sign: " + sign);
+            Log.i("MY_TAG", "verifyTrue: " + verifyTrue);
+            AttestationSdkApi.startAttestation(this, encMobile, AppConstant.CHANNEL_ID, sign, new AttestationSdkManager.OnUserClickLister() {
+                @Override
+                public void onUser(String userid) {
+                    Log.e("MY_TAG", "onUser(String userid) : " + userid);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-
-    public String getSign(String json) {
+    public String getEncMobile(String mobile, long timestamp) {
         try {
-            String encryptData = RSAUtils.encryptByPublicKey(json + System.currentTimeMillis(), AppConstant.RSA_PUB_KEY);//加密，输出已经进行Base64 encode处理
-            String signData = RSAUtils.signByPrivateKey(encryptData, AppConstant.RSA_PRIVATE_KEY, "UTF-8");//加签，输出已经进行Base64 encode处理
-//            Log.e("MY_TAG", "encryptData: " + encryptData);
-//            Log.e("MY_TAG", "signData: " + signData);
-//
-//            Log.i("MY_TAG", "私钥解密: " + RSAUtils.decryptByPrivateKey(encryptData, AppConstant.RSA_PRIVATE_KEY));
-////            Log.i("MY_TAG", "私钥解密: " + RSAUtils.decryptRSAToString(encryptData, AppConstant.RSA_PRIVATE_KEY));
-//
-//            Log.e("MY_TAG", "公钥数字签名的校验: " + RSAUtils.verifyByPublicKey(json, AppConstant.RSA_PUB_KEY, signData, "UTF-8"));
-            return signData;
+            return RSAUtils.encryptByPublicKey(mobile + timestamp, AppConstant.RSA_PUB_KEY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+
+    }
+
+
+    public String getSign(String mobile, long timestamp) {
+        try {
+            return RSAUtils.signByPrivateKey(mobile + timestamp, AppConstant.RSA_PRIVATE_KEY, "utf-8");
         } catch (Exception e) {
             e.printStackTrace();
         }

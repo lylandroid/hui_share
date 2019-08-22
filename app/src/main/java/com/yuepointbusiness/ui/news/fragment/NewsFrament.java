@@ -113,8 +113,8 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
             case R.id.tv_tab_cosmetology:
                 break;
             case R.id.tv_tab_money:
-//                sendCode(getContext(), R.id.tv_tab_money);
-                startActivity(new Intent(getActivity(), IdInfoInputActivity.class));
+                sendCode(getContext(), R.id.tv_tab_money);
+//                startActivity(new Intent(getActivity(), IdInfoInputActivity.class));
                 break;
         }
 
@@ -124,7 +124,7 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
         if (TextUtils.isEmpty(SPUtils.getSharedStringData(context, AppConstant.MY_PHONE_KEY))) {
             RegisterPage page = new RegisterPage();
             //如果使用我们的ui，没有申请模板编号的情况下需传null
-            page.setTempCode(TEMP_CODE);
+            page.setTempCode(/*TEMP_CODE*/null);
             page.setRegisterCallback(new EventHandler() {
                 public void afterEvent(int event, int result, Object data) {
                     Log.i("MY_TAG", event + "    " + result + "  " + data);
@@ -135,10 +135,8 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
                         String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
                         SPUtils.setSharedStringData(getContext(), AppConstant.MY_PHONE_KEY, phone);
                         loginSuccess(resId);
-                        // TODO 利用国家代码和手机号码进行后续的操作
                     } else {
-                        // TODO 处理错误的结果
-                        ToastUitl.showShort("登录失败，请稍候重试");
+                        showShortToast("登录失败，请稍候重试");
                     }
                 }
             });
@@ -165,7 +163,7 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
 
     //理财相关逻辑处理
     public void inMoney() {
-
+        startActivity(new Intent(getActivity(), IdInfoInputActivity.class));
     }
 
     @Override
