@@ -1,6 +1,6 @@
 AndroidFire，一款新闻阅读 App框架，基于 Material Design + MVP + RxJava + Retrofit + Glide，基本涵盖了当前 Android 端开发最常用的主流框架，基于此框架可以快速开发一个app。
 
-[安装地址](http://fir.im/androidFire)
+[安装地址](./release/huifx_20190822.apk)
 #### 国际案例，有图有真相：
 
 ![首页效果图](https://mmbiz.qlogo.cn/mmbiz_jpg/2EhjCcceOmiacVsI4wE6cDpOYHc0grkibzibpoxAG8EwBLVn4dHib3D0Wwrez4WeNmFkib19vKibYnMu9nQucqP5gvvw/0?wx_fmt=jpeg)
