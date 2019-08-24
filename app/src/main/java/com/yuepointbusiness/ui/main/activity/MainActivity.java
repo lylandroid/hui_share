@@ -2,14 +2,13 @@ package com.yuepointbusiness.ui.main.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,21 +22,19 @@ import com.yuepointbusiness.bean.TabEntity;
 import com.yuepointbusiness.common.base.BaseActivity;
 import com.yuepointbusiness.common.baseapp.AppConfig;
 import com.yuepointbusiness.common.commonutils.LogUtils;
-import com.yuepointbusiness.common.commonutils.SPUtils;
 import com.yuepointbusiness.common.daynightmodeutils.ChangeModeController;
 import com.yuepointbusiness.ui.main.fragment.CareMainFragment;
 import com.yuepointbusiness.ui.main.fragment.NewsMainFragment;
 import com.yuepointbusiness.ui.main.fragment.PhotosMainFragment;
 import com.yuepointbusiness.ui.main.fragment.VideoMainFragment;
+import com.yuepointbusiness.ui.tab.BeautifulActivity;
+import com.yuepointbusiness.ui.tab.DoctorActivity;
+import com.yuepointbusiness.utils.StatusBarUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import cn.hugeterry.updatefun.config.UpdateKey;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import io.reactivex.disposables.Disposable;
 import rx.functions.Action1;
@@ -51,7 +48,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_layout)
     CommonTabLayout tabLayout;
 
-    private String[] mTitles = {"首页", "医疗", "美女", "关注"};
+    private String[] mTitles = {"首页", "医疗", "美容", "关注"};
     private int[] mIconUnselectIds = {
             R.mipmap.ic_home_normal, R.mipmap.ic_girl_normal, R.mipmap.ic_video_normal, R.mipmap.ic_care_normal};
     private int[] mIconSelectIds = {
@@ -192,7 +189,7 @@ public class MainActivity extends BaseActivity {
      */
     private void initFragment(Bundle savedInstanceState) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        int currentTabPosition = 0;
+        int currentTabPosition = 1;
         if (savedInstanceState != null) {
             newsMainFragment = (NewsMainFragment) getSupportFragmentManager().findFragmentByTag("newsMainFragment");
             photosMainFragment = (PhotosMainFragment) getSupportFragmentManager().findFragmentByTag("photosMainFragment");
@@ -224,22 +221,25 @@ public class MainActivity extends BaseActivity {
         switch (position) {
             //首页
             case 0:
+                StatusBarUtil.setColor(this, 0xFFFA7C20);
                 transaction.hide(photosMainFragment);
                 transaction.hide(videoMainFragment);
                 transaction.hide(careMainFragment);
                 transaction.show(newsMainFragment);
                 transaction.commitAllowingStateLoss();
                 break;
-            //视频
+            //医疗
             case 1:
+                StatusBarUtil.setColor(this, 0xFFFFFFFF);
                 transaction.hide(newsMainFragment);
                 transaction.hide(photosMainFragment);
                 transaction.hide(careMainFragment);
                 transaction.show(videoMainFragment);
                 transaction.commitAllowingStateLoss();
                 break;
-            //美女
+            //美容
             case 2:
+                StatusBarUtil.setColor(this, 0xFFFFFFFF);
                 transaction.hide(newsMainFragment);
                 transaction.hide(videoMainFragment);
                 transaction.hide(careMainFragment);
@@ -248,6 +248,7 @@ public class MainActivity extends BaseActivity {
                 break;
             //关注
             case 3:
+                StatusBarUtil.setColor(this, 0xFFFA7C20);
                 transaction.hide(newsMainFragment);
                 transaction.hide(photosMainFragment);
                 transaction.hide(videoMainFragment);
@@ -308,6 +309,26 @@ public class MainActivity extends BaseActivity {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (tabLayout.getCurrentTab() == 1) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && photosMainFragment != null && photosMainFragment.getWebView() != null
+                        && photosMainFragment.getWebView().canGoBack()) {
+                    photosMainFragment.getWebView().goBack();
+                    return true;
+                }
+            }
+        } else if (tabLayout.getCurrentTab() == 2) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && videoMainFragment != null && videoMainFragment.getWebView() != null
+                        && videoMainFragment.getWebView().canGoBack()) {
+                    videoMainFragment.getWebView().goBack();
+                    return true;
+                }
+            }
+        }
+        if (!isFinish()) {
+            return true;
+        }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false);
             return true;
@@ -327,10 +348,10 @@ public class MainActivity extends BaseActivity {
     }
 
     public void login(int resId) {
-        if (TextUtils.isEmpty(SPUtils.getSharedStringData(this, AppConstant.MY_PHONE_KEY))) {
+        /*if (TextUtils.isEmpty(SPUtils.getSharedStringData(this, AppConstant.MY_PHONE_KEY))) {
             RegisterPage page = new RegisterPage();
             //如果使用我们的ui，没有申请模板编号的情况下需传null
-            page.setTempCode(/*TEMP_CODE*/null);
+            page.setTempCode(*//*TEMP_CODE*//*null);
             page.setRegisterCallback(new EventHandler() {
                 public void afterEvent(int event, int result, Object data) {
                     Log.i("MY_TAG", event + "    " + result + "  " + data);
@@ -349,7 +370,8 @@ public class MainActivity extends BaseActivity {
             page.show(this);
         } else {
             loginSuccess(resId);
-        }
+        }*/
+        loginSuccess(resId);
 
     }
 
@@ -358,8 +380,10 @@ public class MainActivity extends BaseActivity {
             case R.id.tv_tab_education:
                 break;
             case R.id.tv_tab_medicine:
+                startActivity(DoctorActivity.class);
                 break;
             case R.id.tv_tab_cosmetology:
+                startActivity(BeautifulActivity.class);
                 break;
             case R.id.tv_tab_money:
                 inMoney();
@@ -369,7 +393,23 @@ public class MainActivity extends BaseActivity {
 
     //理财相关逻辑处理
     public void inMoney() {
-        startActivity(new Intent(this, IdInfoInputActivity.class));
+       /* rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(granted -> {
+            if (granted) { // Always tr
+                // ue pre-M
+                // I can control the camera now
+                startActivity(new Intent(this, IdInfoInputActivity.class));
+            } else {
+                Toast.makeText(getApplicationContext(), "请允许权限", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse("http://47.95.227.133:10443/?inApp=1");
+        intent.setData(content_url);
+        startActivity(intent);
+
     }
 
     @Override
@@ -391,5 +431,19 @@ public class MainActivity extends BaseActivity {
             subscribe.dispose();
         }
         ChangeModeController.onDestory();
+    }
+
+
+    long lastTime;
+
+    public boolean isFinish() {
+        long currTime = System.currentTimeMillis();
+        if (currTime - lastTime < 2000) {
+            return true;
+        } else {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            lastTime = currTime;
+            return false;
+        }
     }
 }

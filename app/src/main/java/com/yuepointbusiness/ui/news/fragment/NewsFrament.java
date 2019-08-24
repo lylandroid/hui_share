@@ -1,12 +1,8 @@
 package com.yuepointbusiness.ui.news.fragment;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.aspsine.irecyclerview.IRecyclerView;
 import com.aspsine.irecyclerview.OnLoadMoreListener;
@@ -16,24 +12,18 @@ import com.aspsine.irecyclerview.widget.LoadMoreFooterView;
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
 import com.yuepointbusiness.bean.NewsSummary;
-import com.yuepointbusiness.ui.main.activity.IdInfoInputActivity;
+import com.yuepointbusiness.common.base.BaseFragment;
+import com.yuepointbusiness.common.commonwidget.LoadingTip;
 import com.yuepointbusiness.ui.main.activity.MainActivity;
 import com.yuepointbusiness.ui.news.adapter.NewListAdapter;
 import com.yuepointbusiness.ui.news.contract.NewsListContract;
 import com.yuepointbusiness.ui.news.model.NewsListModel;
 import com.yuepointbusiness.ui.news.presenter.NewsListPresenter;
-import com.yuepointbusiness.common.base.BaseFragment;
-import com.yuepointbusiness.common.commonutils.SPUtils;
-import com.yuepointbusiness.common.commonwidget.LoadingTip;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
 
 /**
  * des:新闻fragment
@@ -105,7 +95,7 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+       /* switch (v.getId()) {
             case R.id.tv_tab_education:
                 break;
             case R.id.tv_tab_medicine:
@@ -115,7 +105,8 @@ public class NewsFrament extends BaseFragment<NewsListPresenter, NewsListModel> 
             case R.id.tv_tab_money:
                 ((MainActivity) getActivity()).login(R.id.tv_tab_money);
                 break;
-        }
+        }*/
+        ((MainActivity) getActivity()).login(v.getId());
 
     }
 

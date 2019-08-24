@@ -27,22 +27,22 @@ import butterknife.BindView;
 public class AboutActivity extends BaseActivity {
 
 
-    @BindView(R.id.news_detail_photo_iv)
-    ImageView newsDetailPhotoIv;
-    @BindView(R.id.mask_view)
-    View maskView;
+    //    @BindView(R.id.news_detail_photo_iv)
+//    ImageView newsDetailPhotoIv;
+//    @BindView(R.id.mask_view)
+//    View maskView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbar_layout)
     CollapsingToolbarLayout toolbarLayout;
-    @BindView(R.id.app_bar)
-    AppBarLayout appBar;
-    @BindView(R.id.news_detail_from_tv)
-    TextView newsDetailFromTv;
-    @BindView(R.id.tv_code_des)
-    TextView tvCodeDes;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    //    @BindView(R.id.app_bar)
+//    AppBarLayout appBar;
+//    @BindView(R.id.news_detail_from_tv)
+//    TextView newsDetailFromTv;
+//    @BindView(R.id.tv_code_des)
+//    TextView tvCodeDes;
+//    @BindView(R.id.fab)
+//    FloatingActionButton fab;
     private String mShareLink;
 
     /**
@@ -67,20 +67,20 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         SetTranslanteBar();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    finishAfterTransition();
-                } else {
-                    finish();
-                }
+        toolbar.setNavigationOnClickListener(view -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                finishAfterTransition();
+            } else {
+                finish();
             }
         });
         toolbar.setTitle(getString(R.string.app_name));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbarLayout.setTitle(getString(R.string.app_name));
+        toolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+        toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
         //分享
-        fab.setOnClickListener(new View.OnClickListener() {
+       /* fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mShareLink == null) {
@@ -92,7 +92,7 @@ public class AboutActivity extends BaseActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_contents, getString(R.string.app_name), mShareLink));
                 startActivity(Intent.createChooser(intent, getTitle()));
             }
-        });
+        });*/
 
     }
 }

@@ -43,4 +43,12 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+
+    <style name="txt_w_w_999_14">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/common_text_dark_gray_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

@@ -1,27 +1,15 @@
 package com.yuepointbusiness.ui.main.fragment;
 
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.yuepointbusiness.R;
-import com.yuepointbusiness.app.AppApplication;
-import com.yuepointbusiness.app.AppConstant;
-import com.yuepointbusiness.common.commonutils.SPUtils;
-import com.yuepointbusiness.ui.main.activity.MainActivity;
-import com.yuepointbusiness.ui.news.activity.AboutActivity;
-import com.yuepointbusiness.ui.zone.activity.CircleZoneActivity;
 import com.yuepointbusiness.common.base.BaseFragment;
 import com.yuepointbusiness.common.commonutils.ImageLoaderUtils;
 import com.yuepointbusiness.common.commonwidget.WaveView;
 import com.yuepointbusiness.common.daynightmodeutils.ChangeModeController;
-import com.yuepointbusiness.widget.CustomDialog;
+import com.yuepointbusiness.ui.news.activity.AboutActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,8 +20,8 @@ import butterknife.OnClick;
  * on 2016.09.17:07
  */
 public class CareMainFragment extends BaseFragment {
-    @BindView(R.id.ll_friend_zone)
-    LinearLayout llFriendZone;
+//    @BindView(R.id.ll_friend_zone)
+//    LinearLayout llFriendZone;
     @BindView(R.id.wave_view)
     WaveView waveView;
     @BindView(R.id.img_logo)
@@ -53,7 +41,7 @@ public class CareMainFragment extends BaseFragment {
     protected void initView() {
         //设置头像跟着波浪背景浮动
         ImageLoaderUtils.displayRound(getContext(), imgLogo, R.drawable.bgkobe);
-        changeLogoColorState();
+//        changeLogoColorState();
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-2, -2);
         lp.gravity = Gravity.CENTER;
         waveView.setOnWaveAnimationListener(y -> {
@@ -62,10 +50,10 @@ public class CareMainFragment extends BaseFragment {
         });
     }
 
-    @OnClick(R.id.ll_friend_zone)
+   /* @OnClick(R.id.ll_friend_zone)
     public void friendZone() {
         CircleZoneActivity.startAction(getContext());
-    }
+    }*/
 
     @OnClick(R.id.ll_daynight_toggle)
     public void dayNightToggle() {
@@ -78,7 +66,7 @@ public class CareMainFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.img_logo)
+   /* @OnClick(R.id.img_logo)
     public void exitLoginDialog() {
         if (TextUtils.isEmpty(SPUtils.getSharedStringData(getActivity(), AppConstant.MY_PHONE_KEY))) {
             ((MainActivity) getActivity()).login(R.id.tv_tab_money);
@@ -93,12 +81,12 @@ public class CareMainFragment extends BaseFragment {
             dialog.setBtnCancelListener(v -> dialog.dismiss());
             dialog.show();
         }
-    }
+    }*/
 
     @Override
     public void onResume() {
         super.onResume();
-        changeLogoColorState();
+//        changeLogoColorState();
     }
 
     @Override
@@ -106,11 +94,11 @@ public class CareMainFragment extends BaseFragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             //如果页面是空，当前页面显示则加载数据
-            changeLogoColorState();
+//            changeLogoColorState();
         }
     }
 
-    public void changeLogoColorState() {
+    /*public void changeLogoColorState() {
         if (TextUtils.isEmpty(SPUtils.getSharedStringData(getContext(), AppConstant.MY_PHONE_KEY))) {
             ColorMatrix matrix = new ColorMatrix();
             matrix.setSaturation(0);
@@ -124,6 +112,6 @@ public class CareMainFragment extends BaseFragment {
             ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
             imgLogo.setColorFilter(filter);
         }
-    }
+    }*/
 
 }

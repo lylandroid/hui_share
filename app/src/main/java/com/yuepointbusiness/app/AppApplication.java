@@ -1,8 +1,6 @@
 package com.yuepointbusiness.app;
 
 import android.os.Handler;
-
-import com.mob.MobSDK;
 import com.yuepointbusiness.BuildConfig;
 import com.yuepointbusiness.common.baseapp.BaseApplication;
 import com.yuepointbusiness.common.commonutils.LogUtils;
@@ -19,7 +17,6 @@ public class AppApplication extends BaseApplication {
         mHandler = new Handler();
         //初始化logger
         LogUtils.logInit(BuildConfig.LOG_DEBUG);
-        MobSDK.init(this);
     }
 
     public static Handler getHandler() {

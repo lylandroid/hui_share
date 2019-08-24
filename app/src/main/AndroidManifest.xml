@@ -11,15 +11,17 @@
 
     <application
         android:name=".app.AppApplication"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        tools:replace="android:icon"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon">
 
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity
             android:name=".ui.main.activity.SplashActivity"
@@ -49,7 +51,18 @@
 
         <activity android:name=".common.imagePager.BigImagePagerActivity" />
         <activity
-            android:name=".ui.main.activity.IdInfoInputActivity"
+            android:name=".ui.tab.IdInfoInputActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.tab.DoctorActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ui.tab.TeachActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.tab.BeautifulActivity"
             android:launchMode="singleTop" />
     </application>
 

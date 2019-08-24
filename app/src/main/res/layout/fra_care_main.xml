@@ -3,22 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff5f5f5"
     android:orientation="vertical"
     app:cardBackgroundColor="?attr/dayNightBackground"
     app:dayNightBackgroundAttr="dayNightBackground">
 
-<!--    波浪背景和头像-->
+    <!--    波浪背景和头像-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/main_color">
+
         <TextView
             android:layout_width="match_parent"
-            android:text="我关注的"
-            android:textColor="@color/white"
+            android:layout_height="45dp"
             android:layout_gravity="center|top"
             android:gravity="center"
-            android:layout_height="45dp" />
+            android:text="我关注的"
+            android:textColor="@color/white" />
 
         <com.yuepointbusiness.common.commonwidget.WaveView
             android:id="@+id/wave_view"
@@ -33,12 +35,11 @@
             android:layout_gravity="center" />
     </FrameLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/ll_friend_zone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/selector_gray_deepgray"
         android:padding="8dp">
 
         <ImageView
@@ -55,14 +56,14 @@
             android:text="@string/friend_zone_title"
             android:textColor="?attr/dayNightTwoTextColor"
             app:dayNightTwoTextColorAttr="dayNightTwoTextColor" />
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/ll_daynight_toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/selector_gray_deepgray"
+        android:background="@color/white"
         android:padding="6dp">
 
         <ImageView
@@ -77,8 +78,7 @@
             android:layout_gravity="center_vertical"
             android:paddingLeft="8dp"
             android:text="@string/friend_zone_toggle"
-            android:textColor="?attr/dayNightTwoTextColor"
-            app:dayNightTwoTextColorAttr="dayNightTwoTextColor" />
+            android:textColor="?attr/dayNightTwoTextColor" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/selector_gray_deepgray"
+        android:background="@color/white"
         android:padding="6dp">
 
         <ImageView
@@ -101,8 +101,7 @@
             android:layout_gravity="center_vertical"
             android:paddingLeft="8dp"
             android:text="@string/friend_zone_about"
-            android:textColor="?attr/dayNightTwoTextColor"
-            app:dayNightTwoTextColorAttr="dayNightTwoTextColor" />
+            android:textColor="?attr/dayNightTwoTextColor" />
     </LinearLayout>
 
 </LinearLayout>

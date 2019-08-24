@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#FF000000</color>
     <color name="colorAccent">#FF000000</color>
     <!--白天主题-->
-    <color name="day_backgroup_color">#FFFFFFFF</color>
+    <color name="day_backgroup_color">#fff5f5f5</color>
     <color name="day_one_text_color">#FF000000</color>
     <color name="day_two_text_color">#c9000000</color>
     <color name="day_three_text_color">#8A9599</color>

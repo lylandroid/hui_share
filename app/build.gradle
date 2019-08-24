@@ -97,7 +97,7 @@ dependencies {
 
     api project(':library:photoPicker')//图片选择
     api project(':library:irecyclerview')//万能适配器和recyclerview
-    api project(':library:oneKeyShareSDK')//分享
+//    api project(':library:oneKeyShareSDK')//分享
     api project(':library:jcvideoplayer')//视频播放
     api project(':library:selectordialog')//常用提示框
 //    annotationProcessor "com.jakewharton:butterknife:7.0.1"
@@ -116,7 +116,7 @@ dependencies {
 //    implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    api(name: 'meglive_still', ext: 'aar')
+    /*api(name: 'meglive_still', ext: 'aar')
     // compile(name: 'attestationsdk-release', ext: 'aar')
     api(name: 'payegis-did-v7.0.1-release', ext: 'aar')
     api(name: 'attestationsdk-release', ext: 'aar')
@@ -125,14 +125,14 @@ dependencies {
     // (必选)
     api 'com.just.agentweb:download:4.0.2'
     // (可选)
-    api 'com.just.agentweb:filechooser:4.0.2'
+    api 'com.just.agentweb:filechooser:4.0.2'*/
     // (可选)
 
 
 }
 
 // 添加插件
-apply plugin: 'com.mob.sdk'
+/*apply plugin: 'com.mob.sdk'
 
 // 在MobSDK的扩展中注册SMSSDK的相关信息
 MobSDK {
@@ -145,4 +145,4 @@ MobSDK {
         //若使用GUI的自动填充验证码功能，需打开此设置
         //autoSMS true
     }
-}
+}*/

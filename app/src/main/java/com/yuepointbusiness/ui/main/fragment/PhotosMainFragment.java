@@ -3,6 +3,7 @@ package com.yuepointbusiness.ui.main.fragment;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.aspsine.irecyclerview.IRecyclerView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.bean.PhotoGirl;
+import com.yuepointbusiness.ui.main.activity.MainActivity;
 import com.yuepointbusiness.ui.news.activity.PhotosDetailActivity;
 import com.yuepointbusiness.ui.news.contract.PhotoListContract;
 import com.yuepointbusiness.ui.news.model.PhotosListModel;
@@ -23,6 +25,7 @@ import com.yuepointbusiness.ui.news.presenter.PhotosListPresenter;
 import com.yuepointbusiness.common.base.BaseFragment;
 import com.yuepointbusiness.common.commonwidget.LoadingTip;
 import com.yuepointbusiness.common.commonwidget.NormalTitleBar;
+import com.yuepointbusiness.widget.BaseWebView;
 
 import java.util.List;
 
@@ -33,8 +36,8 @@ import butterknife.BindView;
  * Created by xsf
  * on 2016.09.11:49
  */
-public class PhotosMainFragment extends BaseFragment<PhotosListPresenter,PhotosListModel> implements PhotoListContract.View ,OnRefreshListener,OnLoadMoreListener{
-    @BindView(R.id.ntb)
+public class PhotosMainFragment extends BaseFragment<PhotosListPresenter, PhotosListModel> implements PhotoListContract.View, OnRefreshListener, OnLoadMoreListener {
+  /*  @BindView(R.id.ntb)
     NormalTitleBar ntb;
     @BindView(R.id.irc)
     IRecyclerView irc;
@@ -44,37 +47,55 @@ public class PhotosMainFragment extends BaseFragment<PhotosListPresenter,PhotosL
     FloatingActionButton fab;
     private CommonRecycleViewAdapter<PhotoGirl>adapter;
     private static int SIZE = 20;
-    private int mStartPage = 1;
+    private int mStartPage = 1;*/
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.web_view)
+    BaseWebView mWebView;
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.act_photos_list;
+//        return R.layout.act_photos_list;
+        return R.layout.app_bar_video;
     }
 
     @Override
     public void initPresenter() {
-        mPresenter.setVM(this,mModel);
+//        mPresenter.setVM(this, mModel);
+        mToolbar.setNavigationOnClickListener(v -> {
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();// 返回前一个页面
+            } else {
+                if (((MainActivity) getActivity()).isFinish()) {
+                    getActivity().finish();
+                }
+            }
+        });
     }
 
     @Override
     public void initView() {
-        ntb.setTvLeftVisiable(false);
-        ntb.setTitleText(getString(R.string.girl_title));
-        adapter=new CommonRecycleViewAdapter<PhotoGirl>(getContext(),R.layout.item_photo) {
+        mToolbar.setTitle("美容");
+//        mWebView.setWebSettings();
+        mWebView.loadUrl("http://www.shlzmr.com/");
+        /*ntb.setTvLeftVisiable(false);
+        ntb.setTitleText(getString(R.string.tab_2_title));
+        adapter = new CommonRecycleViewAdapter<PhotoGirl>(getContext(), R.layout.item_photo) {
             @Override
-            public void convert(ViewHolderHelper helper,final PhotoGirl photoGirl) {
-                ImageView imageView=helper.getView(R.id.iv_photo);
+            public void convert(ViewHolderHelper helper, final PhotoGirl photoGirl) {
+                ImageView imageView = helper.getView(R.id.iv_photo);
                 Glide.with(mContext).load(photoGirl.getUrl())
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .placeholder(com.yuepointbusiness.common.R.drawable.ic_image_loading)
                         .error(com.yuepointbusiness.common.R.drawable.ic_empty_picture)
-                        .centerCrop().override(1090, 1090*3/4)
+                        .centerCrop().override(1090, 1090 * 3 / 4)
                         .crossFade().into(imageView);
 
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        PhotosDetailActivity.startAction(mContext,photoGirl.getUrl());
+                        PhotosDetailActivity.startAction(mContext, photoGirl.getUrl());
                     }
                 });
             }
@@ -89,13 +110,13 @@ public class PhotosMainFragment extends BaseFragment<PhotosListPresenter,PhotosL
                 irc.smoothScrollToPosition(0);
             }
         });
-        mPresenter.getPhotosListDataRequest(SIZE, mStartPage);
+        mPresenter.getPhotosListDataRequest(SIZE, mStartPage);*/
     }
 
     @Override
     public void returnPhotosListData(List<PhotoGirl> photoGirls) {
-        if (photoGirls != null) {
-            mStartPage +=1;
+        /*if (photoGirls != null) {
+            mStartPage += 1;
             if (adapter.getPageBean().isRefresh()) {
                 irc.setRefreshing(false);
                 adapter.replaceAll(photoGirls);
@@ -107,45 +128,49 @@ public class PhotosMainFragment extends BaseFragment<PhotosListPresenter,PhotosL
                     irc.setLoadMoreStatus(LoadMoreFooterView.Status.THE_END);
                 }
             }
-        }
+        }*/
     }
 
     @Override
     public void showLoading(String title) {
-        if(adapter.getPageBean().isRefresh())
-        loadedTip.setLoadingTip(LoadingTip.LoadStatus.loading);
+        /*if (adapter.getPageBean().isRefresh())
+            loadedTip.setLoadingTip(LoadingTip.LoadStatus.loading);*/
     }
 
     @Override
     public void stopLoading() {
-        loadedTip.setLoadingTip(LoadingTip.LoadStatus.finish);
+        /* loadedTip.setLoadingTip(LoadingTip.LoadStatus.finish);*/
     }
 
     @Override
     public void showErrorTip(String msg) {
-        if( adapter.getPageBean().isRefresh()) {
+        /*if (adapter.getPageBean().isRefresh()) {
             loadedTip.setLoadingTip(LoadingTip.LoadStatus.error);
             loadedTip.setTips(msg);
             irc.setRefreshing(false);
-        }else{
+        } else {
             irc.setLoadMoreStatus(LoadMoreFooterView.Status.ERROR);
-        }
+        }*/
     }
 
     @Override
     public void onRefresh() {
-        adapter.getPageBean().setRefresh(true);
+        /*adapter.getPageBean().setRefresh(true);
         mStartPage = 0;
         //发起请求
         irc.setRefreshing(true);
-        mPresenter.getPhotosListDataRequest(SIZE, mStartPage);
-    }
-    @Override
-    public void onLoadMore(View loadMoreView) {
-        adapter.getPageBean().setRefresh(false);
-        //发起请求
-        irc.setLoadMoreStatus(LoadMoreFooterView.Status.LOADING);
-        mPresenter.getPhotosListDataRequest(SIZE, mStartPage);
+        mPresenter.getPhotosListDataRequest(SIZE, mStartPage);*/
     }
 
+    @Override
+    public void onLoadMore(View loadMoreView) {
+       /* adapter.getPageBean().setRefresh(false);
+        //发起请求
+        irc.setLoadMoreStatus(LoadMoreFooterView.Status.LOADING);
+        mPresenter.getPhotosListDataRequest(SIZE, mStartPage);*/
+    }
+
+    public BaseWebView getWebView() {
+        return mWebView;
+    }
 }

@@ -1,137 +1,195 @@
 package com.yuepointbusiness.widget;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.webkit.WebResourceRequest;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.webkit.DownloadListener;
+import android.webkit.SslErrorHandler;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.annotation.RequiresApi;
-
-import java.util.Map;
-
 /**
- * WebView基础类，处理一些基础的公有操作
- *
- * @author xingli
- * @time 2017-12-06
+ * common webView
+ * <p>
+ * Created by zhangyan42@baidu.com on 2017/5/19.
  */
+@SuppressLint("SetJavaScriptEnabled")
 public class BaseWebView extends WebView {
-
-    private boolean mTouchByUser;
-
-    public BaseWebView(Context context) {
-        super(context);
-    }
 
     public BaseWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
     }
 
-    public BaseWebView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public BaseWebView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
     }
 
-    @Override
-    public final void loadUrl(String url, Map<String, String> additionalHttpHeaders) {
-        super.loadUrl(url, additionalHttpHeaders);
-        resetAllStateInternal(url);
+    public BaseWebView(Context context) {
+        super(context);
+        init(context);
     }
 
-    @Override
-    public void loadUrl(String url) {
-        super.loadUrl(url);
-        resetAllStateInternal(url);
-    }
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
+    private void init(Context context) {
+        this.setVerticalScrollBarEnabled(false);
+        this.setHorizontalScrollBarEnabled(false);
+        /*if (Build.VERSION.SDK_INT < 19) {
+            removeJavascriptInterface("searchBoxJavaBridge_");
+        }*/
 
-    @Override
-    public final void postUrl(String url, byte[] postData) {
-        super.postUrl(url, postData);
-        resetAllStateInternal(url);
-    }
+        WebSettings localWebSettings = this.getSettings();
+        try {
+            // 禁用file协议,http://www.tuicool.com/articles/Q36ZfuF, 防止Android WebView File域攻击
+            localWebSettings.setAllowFileAccess(false);
+            localWebSettings.setSupportZoom(false);
+            localWebSettings.setBuiltInZoomControls(false);
+            localWebSettings.setUseWideViewPort(true);
+            localWebSettings.setDomStorageEnabled(true);
+            localWebSettings.setLoadWithOverviewMode(true);
+            localWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+            localWebSettings.setPluginState(WebSettings.PluginState.ON);
 
-    @Override
-    public final void loadData(String data, String mimeType, String encoding) {
-        super.loadData(data, mimeType, encoding);
-        resetAllStateInternal(getUrl());
-    }
+            localWebSettings.setAppCacheMaxSize(1024 * 1024 * 8);
+            // 启用数据库
+            localWebSettings.setDatabaseEnabled(true);
+            // 设置定位的数据库路径
+            String dir = context.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+            localWebSettings.setGeolocationDatabasePath(dir);
+            localWebSettings.setGeolocationEnabled(true);
+            localWebSettings.setJavaScriptEnabled(true);
+            localWebSettings.setSavePassword(false);
 
-    @Override
-    public final void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding,
-                                          String historyUrl) {
-        super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
-        resetAllStateInternal(getUrl());
-    }
+            localWebSettings.setAppCacheEnabled(true);    //开启H5(APPCache)缓存功能
+            localWebSettings.setBlockNetworkImage(true);
 
-    @Override
-    public void reload() {
-        super.reload();
-        resetAllStateInternal(getUrl());
-    }
+            requestFocus();
+            String agent = localWebSettings.getUserAgentString();
 
-    public boolean isTouchByUser() {
-        return mTouchByUser;
-    }
+            localWebSettings.setUserAgentString(agent);
+            // setCookie(context, ".baidu.com", bdussCookie);
 
-    private void resetAllStateInternal(String url) {
-        if (!TextUtils.isEmpty(url) && url.startsWith("javascript:")) {
-            return;
+        } catch (Exception e1) {
+            e1.printStackTrace();
         }
-        resetAllState();
-    }
-
-    // 加载url时重置touch状态
-    protected void resetAllState() {
-        mTouchByUser = false;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                //用户按下到下一个链接加载之前，置为true
-                mTouchByUser = true;
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    public void setWebViewClient(final WebViewClient client) {
-        super.setWebViewClient(new WebViewClient() {
+        setWebChromeClient(new WebChromeClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                boolean handleByChild = null != client && client.shouldOverrideUrlLoading(view, url);
-                if (handleByChild) {
-                    // 开放client接口给上层业务调用，如果返回true，表示业务已处理。
-                    return true;
-                } else if (!isTouchByUser()) {
-                    // 如果业务没有处理，并且在加载过程中用户没有再次触摸屏幕，认为是301/302事件，直接交由系统处理。
-                    return super.shouldOverrideUrlLoading(view, url);
-                } else {
-                    //否则，属于二次加载某个链接的情况，为了解决拼接参数丢失问题，重新调用loadUrl方法添加固有参数。
-                    loadUrl(url);
-                    return true;
-                }
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                boolean handleByChild = null != client && client.shouldOverrideUrlLoading(view, request);
-
-                if (handleByChild) {
-                    return true;
-                } else if (!isTouchByUser()) {
-                    return super.shouldOverrideUrlLoading(view, request);
-                } else {
-                    loadUrl(request.getUrl().toString());
-                    return true;
-                }
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
+                                             WebChromeClient.FileChooserParams fileChooserParams) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                ((Activity) getContext()).startActivityForResult(Intent.createChooser(intent, "File Chooser"), 0);
+                return true;
             }
         });
+        this.setWebViewClient(new BridgeWebViewClient());
+    }
+
+
+    private void setCookie(Context context, String domain, String sessionCookie) {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        if (sessionCookie != null) {
+            // delete old cookies
+            cookieManager.removeSessionCookie();
+        }
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        cookieManager.setCookie(domain, sessionCookie);
+
+        CookieSyncManager.createInstance(context);
+        CookieSyncManager.getInstance().sync();
+    }
+
+    public void setDownloadListener(DownloadListener listener) {
+        super.setDownloadListener(listener);
+    }
+
+    private WebViewClientListener webViewClientListen;
+
+    public void setWebViewClientListen(WebViewClientListener webViewClientListen) {
+        this.webViewClientListen = webViewClientListen;
+    }
+
+    /**
+     * 枚举网络加载返回状态 STATUS_FALSE:false
+     * STATUS_TRUE:true
+     * STATUS_UNKNOW:不知道
+     * NET_UNKNOWN:未知网络
+     */
+    public enum LoadingWebStatus {
+        STATUS_FALSE, STATUS_TRUE, STATUS_UNKNOW
+    }
+
+    public interface WebViewClientListener {
+        LoadingWebStatus shouldOverrideUrlLoading(WebView view, String url);
+
+        void onPageStarted(WebView view, String url, Bitmap favicon);
+
+        void onPageFinished(WebView view, String url);
+
+        void onReceivedError(WebView view, int errorCode, String description, String failingUrl);
+    }
+
+    public class BridgeWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            getSettings().setBlockNetworkImage(true);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if (null != webViewClientListen) {
+                webViewClientListen.onPageFinished(view, url);
+            }
+            getSettings().setBlockNetworkImage(false);
+            if (!getSettings().getLoadsImagesAutomatically()) {
+                //设置wenView加载图片资源
+                getSettings().setLoadsImagesAutomatically(true);
+            }
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String
+                failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            if (null != webViewClientListen) {
+                webViewClientListen.onReceivedError(view, errorCode, description, failingUrl);
+            }
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            // 当发生证书认证错误时，采用默认的处理方法handler.cancel()，停止加载问题页面
+            handler.proceed();
+//            handler.cancel();
+//            handler.handleMessage(null);
+        }
     }
 }
