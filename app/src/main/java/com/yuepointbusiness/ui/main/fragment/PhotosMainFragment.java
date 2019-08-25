@@ -1,9 +1,12 @@
 package com.yuepointbusiness.ui.main.fragment;
 
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.aspsine.irecyclerview.IRecyclerView;
@@ -30,9 +33,10 @@ import com.yuepointbusiness.widget.BaseWebView;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
- * des:图片首页
+ * des:美容首页
  * Created by xsf
  * on 2016.09.11:49
  */
@@ -53,6 +57,10 @@ public class PhotosMainFragment extends BaseFragment<PhotosListPresenter, Photos
     Toolbar mToolbar;
     @BindView(R.id.web_view)
     BaseWebView mWebView;
+    @BindView(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @Override
     protected int getLayoutResource() {
@@ -72,13 +80,25 @@ public class PhotosMainFragment extends BaseFragment<PhotosListPresenter, Photos
                 }
             }
         });
+        mWebView.setWebViewClientListen(new BaseWebView.WebViewClientListener() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
+                if (newProgress < 100 && progressBar.getVisibility() != View.VISIBLE) {
+                    progressBar.setVisibility(View.VISIBLE);
+                } else if (newProgress == 100) {
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            }
+        });
     }
 
     @Override
     public void initView() {
-        mToolbar.setTitle("美容");
+        tvTitle.setText("美容");
+        mWebView.loadUrl("http://www.shlzmr.com/index.html");
 //        mWebView.setWebSettings();
-        mWebView.loadUrl("http://www.shlzmr.com/");
         /*ntb.setTvLeftVisiable(false);
         ntb.setTitleText(getString(R.string.tab_2_title));
         adapter = new CommonRecycleViewAdapter<PhotoGirl>(getContext(), R.layout.item_photo) {
@@ -111,6 +131,11 @@ public class PhotosMainFragment extends BaseFragment<PhotosListPresenter, Photos
             }
         });
         mPresenter.getPhotosListDataRequest(SIZE, mStartPage);*/
+    }
+
+    @OnClick(R.id.btn_search)
+    public void onClick(View v) {
+        mWebView.reload();
     }
 
     @Override

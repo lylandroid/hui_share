@@ -40,7 +40,7 @@
 
                 <TextView
                     style="@style/txt_w_w_999_14"
-                    android:text="上海圣悯门诊部有限公司" />
+                    android:text="上海逆时针医疗美容门诊部有限公司" />
             </LinearLayout>
 
             <LinearLayout
@@ -56,10 +56,10 @@
 
                 <TextView
                     style="@style/txt_w_w_999_14"
-                    android:text="上海市闵行区申滨路188号1层L101室" />
+                    android:text="上海市普陀区长寿路818弄56、58号1-2层" />
             </LinearLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -73,7 +73,7 @@
                 <TextView
                     style="@style/txt_w_w_999_14"
                     android:text="13816869654" />
-            </LinearLayout>
+            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
 
                 <TextView
                     style="@style/txt_w_w_999_14"
-                    android:text="踪家武" />
+                    android:text="周毅涛" />
             </LinearLayout>
 
 

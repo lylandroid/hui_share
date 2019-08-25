@@ -2,12 +2,15 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="fill_vertical"
+    android:layout_marginBottom="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/container_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
+        android:paddingBottom="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -91,6 +94,40 @@
                 </LinearLayout>
 
 
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            app:cardCornerRadius="5dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/txt_w_w_999_14"
+                        android:text="简介："
+                        android:textColor="@color/color_333333" />
+
+                    <TextView
+                        style="@style/txt_w_w_999_14"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text=" \t\t 惠分享在经营模式上，与京东商城及众多合作伙伴合作，最早从分期购买手机切入，逐步拓展到整个3C数码、运动户外、洗护美妆、医疗美容，教育培训、吃喝玩乐等多个消费场景。
+截至2016年4月，惠分享已拥有超过800万注册用户，为年轻群体、白领的合理消费提供多方位支持。" />
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

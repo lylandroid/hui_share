@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.yuepointbusiness.R;
 import com.yuepointbusiness.app.AppConstant;
@@ -18,9 +20,10 @@ import com.yuepointbusiness.widget.BaseWebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * des:医疗首页
+ * des:美容首页
  * Created by xsf
  * on 2016.09.16:45
  */
@@ -38,6 +41,10 @@ public class VideoMainFragment extends BaseFragment {
     private BaseFragmentAdapter fragmentAdapter;*/
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @Override
     protected int getLayoutResource() {
@@ -59,8 +66,22 @@ public class VideoMainFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        tvTitle.setText("医疗");
 //        webView.setWebSettings();
-        webView.loadUrl("http://www.shlzmr.com/index.html");
+//        webView.loadUrl("http://www.shlzmr.com/index.html");
+        webView.loadUrl("http://m.51daifu.com/mr/yydt-30628.shtml");
+        webView.setWebViewClientListen(new BaseWebView.WebViewClientListener() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
+                if (newProgress < 100 && progressBar.getVisibility() != View.VISIBLE) {
+                    progressBar.setVisibility(View.VISIBLE);
+                } else if (newProgress == 100) {
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            }
+        });
       /*  List<String> channelNames = new ArrayList<>();
         List<VideoChannelTable> videoChannelTableList = VideosChannelTableManager.loadVideosChannelsMine();
         List<Fragment> mNewsFragmentList = new ArrayList<>();
@@ -98,6 +119,11 @@ public class VideoMainFragment extends BaseFragment {
 
             }
         });*/
+    }
+
+    @OnClick(R.id.btn_search)
+    public void onClick(View v) {
+        webView.reload();
     }
 
     private VideosFragment createListFragments(VideoChannelTable videoChannelTable) {
