@@ -8,9 +8,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.yuepointbusiness.R;
+import com.yuepointbusiness.ui.main.activity.MainActivity;
 import com.yuepointbusiness.widget.BaseWebView;
 
 import butterknife.BindView;
@@ -28,8 +30,8 @@ public class TeachActivity extends AppCompatActivity {
 
     @BindView(R.id.web_view)
     BaseWebView webView;
-  /*  @BindView(R.id.toolbar)
-    Toolbar toolbar;*/
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     /*@BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -48,6 +50,14 @@ public class TeachActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_theach);
         unbinder = ButterKnife.bind(this);
+
+        toolbar.setNavigationOnClickListener(v -> {
+            if (webView.canGoBack()) {
+                webView.goBack();// 返回前一个页面
+            } else {
+                finish();
+            }
+        });
 
         webView.loadUrl("http://www.xdf.cn/");
         webView.setWebViewClientListen(new BaseWebView.WebViewClientListener() {
@@ -146,6 +156,11 @@ public class TeachActivity extends AppCompatActivity {
     public void onClick(View v) {
         webView.reload();
     }*/
+
+    @OnClick(R.id.btn_search)
+    public void onClick(View v) {
+        webView.reload();
+    }
 
 
     public void showToast(String txt) {

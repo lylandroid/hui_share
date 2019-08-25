@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:clipToPadding="true">
 
-    <!--<com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        &lt;!&ndash;<LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/main_color"
@@ -24,19 +24,18 @@
                 android:layout_weight="1"
                 app:tabBackground="@color/main_color"
                 app:tabIndicatorColor="@color/white" />
-        </LinearLayout>&ndash;&gt;
+        </LinearLayout>-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/teach_toolbar"
             app:contentInsetLeft="10dp"
             app:contentInsetRight="0dp"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="10dp"
-            app:navigationIcon="@drawable/icon_homework_back"
-            app:subtitleTextColor="@color/color_666666"
-            app:titleTextColor="@color/color_666666">
+            app:navigationIcon="@drawable/ic_back"
+            app:titleTextColor="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +47,7 @@
                     style="@style/txt_w_w_999_14"
                     android:layout_weight="1"
                     android:text="教育"
-                    android:textColor="@color/color_666666"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <TextView
@@ -58,14 +57,15 @@
                     android:paddingTop="2dp"
                     android:paddingRight="18dp"
                     android:paddingBottom="2dp"
-                    android:text="刷新" />
+                    android:text="刷新"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
 
         </androidx.appcompat.widget.Toolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>-->
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <com.yuepointbusiness.widget.BaseWebView
