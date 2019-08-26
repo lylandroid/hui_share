@@ -49,7 +49,8 @@ public class IdInfoInputActivity extends AppCompatActivity {
 
 //        webView.setDefaultWebSettings(webView);
 //        webView.setWebSettings();
-        webView.loadUrl("http://47.95.227.133:10443/?inApp=1");
+        //webView.loadUrl("http://47.95.227.133:10443/?inApp=1");
+        webView.loadUrl("http://co.wisecofincloud.com/?inApp=1&clientId=huifx001");
 //        webView.loadUrl("http://47.95.227.133:10443/login");
        /* mToolbar.setNavigationOnClickListener(v -> {
             finish();
