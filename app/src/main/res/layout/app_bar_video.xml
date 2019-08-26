@@ -30,21 +30,52 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            app:navigationIcon="@drawable/icon_homework_back"
             app:contentInsetLeft="10dp"
+            app:contentInsetRight="0dp"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="10dp"
+            app:navigationIcon="@drawable/icon_homework_back"
+            app:subtitleTextColor="@color/color_666666"
             app:title="医疗"
-            app:titleTextColor="@color/color_666666" />
+            app:titleTextColor="@color/color_666666">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/txt_w_w_999_14"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_title"
+                    android:text="医疗"
+                    android:textColor="@color/color_666666"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/btn_search"
+                    style="@style/txt_w_w_999_14"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="18dp"
+                    android:paddingBottom="2dp"
+                    android:text="刷新" />
+
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <com.yuepointbusiness.widget.BaseWebView
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="3dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!--<androidx.viewpager.widget.ViewPager
@@ -62,5 +93,15 @@
          android:src="@drawable/ic_arrow_upward"
          app:backgroundTint="@color/main_color"
          app:layout_behavior=".widget.ScrollAwareFABBehavior" />-->
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:max="100"
+        android:progress="1"
+        android:progressDrawable="@drawable/progressbar_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

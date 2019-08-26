@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -95,6 +94,15 @@ public class BaseWebView extends WebView {
                 ((Activity) getContext()).startActivityForResult(Intent.createChooser(intent, "File Chooser"), 0);
                 return true;
             }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (webViewClientListen != null) {
+                    webViewClientListen.onProgressChanged(view, newProgress);
+                }
+
+            }
         });
         this.setWebViewClient(new BridgeWebViewClient());
     }
@@ -139,14 +147,22 @@ public class BaseWebView extends WebView {
         STATUS_FALSE, STATUS_TRUE, STATUS_UNKNOW
     }
 
-    public interface WebViewClientListener {
-        LoadingWebStatus shouldOverrideUrlLoading(WebView view, String url);
+    public static abstract class WebViewClientListener {
+        public LoadingWebStatus shouldOverrideUrlLoading(WebView view, String url) {
+            return LoadingWebStatus.STATUS_UNKNOW;
+        }
 
-        void onPageStarted(WebView view, String url, Bitmap favicon);
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        }
 
-        void onPageFinished(WebView view, String url);
+        public void onPageFinished(WebView view, String url) {
+        }
 
-        void onReceivedError(WebView view, int errorCode, String description, String failingUrl);
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        }
+
+        public void onProgressChanged(WebView view, int newProgress) {
+        }
     }
 
     public class BridgeWebViewClient extends WebViewClient {

@@ -2,16 +2,22 @@ package com.yuepointbusiness.ui.tab;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.yuepointbusiness.R;
+import com.yuepointbusiness.ui.main.activity.MainActivity;
 import com.yuepointbusiness.widget.BaseWebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -24,8 +30,8 @@ public class TeachActivity extends AppCompatActivity {
 
     @BindView(R.id.web_view)
     BaseWebView webView;
-  /*  @BindView(R.id.toolbar)
-    Toolbar toolbar;*/
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     /*@BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -36,12 +42,39 @@ public class TeachActivity extends AppCompatActivity {
     EditText mEtName;
     @BindView(R.id.et_id_card)
     EditText mEtIdCard;*/
+    @BindView(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_id_card_info);
+        setContentView(R.layout.act_theach);
         unbinder = ButterKnife.bind(this);
+
+        toolbar.setNavigationOnClickListener(v -> {
+            if (webView.canGoBack()) {
+                webView.goBack();// 返回前一个页面
+            } else {
+                finish();
+            }
+        });
+
+        webView.loadUrl("http://www.xdf.cn/");
+        webView.setWebViewClientListen(new BaseWebView.WebViewClientListener() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (progressBar == null) {
+                    return;
+                }
+                progressBar.setProgress(newProgress);
+                if (newProgress < 100 && progressBar.getVisibility() != View.VISIBLE) {
+                    progressBar.setVisibility(View.VISIBLE);
+                } else if (newProgress == 100) {
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            }
+        });
 
        /* toolbar.setNavigationOnClickListener(v -> {
 
@@ -119,9 +152,30 @@ public class TeachActivity extends AppCompatActivity {
         }
     }*/
 
+   /* @OnClick(R.id.btn_search)
+    public void onClick(View v) {
+        webView.reload();
+    }*/
+
+    @OnClick(R.id.btn_search)
+    public void onClick(View v) {
+        webView.reload();
+    }
+
 
     public void showToast(String txt) {
         Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && webView != null && webView.canGoBack()) {
+                webView.goBack();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

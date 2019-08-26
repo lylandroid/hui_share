@@ -29,6 +29,7 @@ import com.yuepointbusiness.ui.main.fragment.PhotosMainFragment;
 import com.yuepointbusiness.ui.main.fragment.VideoMainFragment;
 import com.yuepointbusiness.ui.tab.BeautifulActivity;
 import com.yuepointbusiness.ui.tab.DoctorActivity;
+import com.yuepointbusiness.ui.tab.TeachActivity;
 import com.yuepointbusiness.utils.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -378,6 +379,7 @@ public class MainActivity extends BaseActivity {
     public void loginSuccess(int resId) {
         switch (resId) {
             case R.id.tv_tab_education:
+                startActivity(TeachActivity.class);
                 break;
             case R.id.tv_tab_medicine:
                 startActivity(DoctorActivity.class);
